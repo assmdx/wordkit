@@ -1,0 +1,27 @@
+{
+  "name": "wordkit",
+  "version": "1.0.0",
+  "description": "随机在屏幕上打一行字",
+  "main": "main.js",
+  "scripts": {
+    "test": "electron .",
+    "start": "electron .",
+    "build":"electron-packager . --overwrite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/assmdx/wordkit.git"
+  },
+  "author": "assmdx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/assmdx/wordkit/issues"
+  },
+  "homepage": "https://github.com/assmdx/wordkit#readme",
+  "dependencies": {
+    "electron": "^2.0.6"
+  },
+  "devDependencies": {
+    "electron-packager": "^12.1.0"
+  }
+}
