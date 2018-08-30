@@ -6,7 +6,9 @@
   "scripts": {
     "test": "electron .",
     "start": "electron .",
-    "build":"electron-packager . --overwrite"
+    "build_exe": "electron-packager . --overwrite",
+    "build": "electron-builder --win --ia32",
+    "dist": "electron-builder --win --x64"
   },
   "repository": {
     "type": "git",
@@ -19,9 +21,26 @@
   },
   "homepage": "https://github.com/assmdx/wordkit#readme",
   "dependencies": {
-    "electron": "^2.0.6"
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "electron-builder": "^20.27.1",
     "electron-packager": "^12.1.0"
+  },
+  "build": {
+    "appId": "com.assmdx.wordkit",
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    }
   }
 }
