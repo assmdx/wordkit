@@ -4,7 +4,7 @@ const io = require('socket.io-client');
 const socket = io('http://localhost:3000');
 
 function createWindow() {
-    let win = new BrowserWindow({width: 800, height: 500, frame: false,transparent: true, alwaysOnTop: true})
+    let win = new BrowserWindow({width: 800, height: 500, frame: false,transparent: true, alwaysOnTop: false,movable:false})
     win.setIgnoreMouseEvents(true)
     win.loadFile('index.html')
     //win.openDevTools()
@@ -28,7 +28,7 @@ let tray
 app.on('ready', function () {
     createWindow();
     addKeyBind();
-    tray = new Tray(path.join(__dirname, '/assets/img/icon.ico'))
+    tray = new Tray(path.join(__dirname, 'icon.ico'))
     const contextMenu = Menu.buildFromTemplate([
         {
             label: '退出',
@@ -45,12 +45,28 @@ app.on('ready', function () {
 })
 
 //设置开机自动启动
+
+
 app.setLoginItemSettings({
     openAtLogin: true,
     path: app.getPath('exe')
+    //path:'C:\\Users\\Administrator\\AppData\\Local\\Programs\\wordkit\\wordkit.exe'
 })
 
+// const AutoLaunch = require('auto-launch');
+// let autoLaunch = new AutoLaunch({
+//     name: 'wordkit',
+//     path: app.getPath('exe'),
+// });
+// autoLaunch.isEnabled().then((isEnabled) => {
+//     if (!isEnabled) autoLaunch.enable();
+// });
 
+// let alConfig = { name: "wordkit", isHidden: true };
+// if (process.env.APPIMAGE) {
+//     alConfig = Object.assign(alConfig, { path: process.env.APPIMAGE })
+// }
+// const al = new AutoLaunch(alConfig);
 
 //
 function saveWord(){
