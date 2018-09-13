@@ -34,7 +34,6 @@ app.on('ready', function () {
             label: '退出',
             click: function () {
                 saveWord();
-                //app.quit();
             }
         }
     ])
@@ -50,25 +49,8 @@ app.on('ready', function () {
 app.setLoginItemSettings({
     openAtLogin: true,
     path: app.getPath('exe')
-    //path:'C:\\Users\\Administrator\\AppData\\Local\\Programs\\wordkit\\wordkit.exe'
 })
 
-// const AutoLaunch = require('auto-launch');
-// let autoLaunch = new AutoLaunch({
-//     name: 'wordkit',
-//     path: app.getPath('exe'),
-// });
-// autoLaunch.isEnabled().then((isEnabled) => {
-//     if (!isEnabled) autoLaunch.enable();
-// });
-
-// let alConfig = { name: "wordkit", isHidden: true };
-// if (process.env.APPIMAGE) {
-//     alConfig = Object.assign(alConfig, { path: process.env.APPIMAGE })
-// }
-// const al = new AutoLaunch(alConfig);
-
-//
 function saveWord(){
     socket.emit('save word','');
 }

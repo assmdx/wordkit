@@ -14,5 +14,8 @@ function addWord(event){
             console.error(e);
         }
     }
+    if(event.keyCode === 27) {
+        remote.getCurrentWindow().close();
+    }
 }
 
