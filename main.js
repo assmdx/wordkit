@@ -4,8 +4,8 @@ const io = require('socket.io-client');
 const socket = io('http://localhost:3000');
 
 function createWindow() {
-    let win = new BrowserWindow({width: 800, height: 500, frame: false,transparent: true, alwaysOnTop: false,movable:false})
-    win.setIgnoreMouseEvents(true)
+    let win = new BrowserWindow({width: 800, height: 500, frame: false,transparent: true, alwaysOnTop: false,movable:true})
+    // win.setIgnoreMouseEvents(true)
     win.loadFile('index.html')
     //win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);

@@ -7,7 +7,9 @@ function addWord(event){
     if(event.keyCode === 13){
         console.log('I want to add ', event.target.value);
         try{
-            socket.emit('add word', event.target.value);
+            if(event.target.value){
+                socket.emit('add word', event.target.value);
+            }
             remote.getCurrentWindow().close();
         }
         catch(e){

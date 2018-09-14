@@ -29,7 +29,7 @@ io.on('connection',(socket) =>{
     });
     //添加句子
     socket.on('add word', function(msg){
-        console.log(msg);
+        console.log('add word',msg);
         words.push(msg);
         socket.broadcast.emit('add word success~');
     });
