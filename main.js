@@ -1,4 +1,4 @@
-const {app, Menu, BrowserWindow, Tray, globalShortcut} = require('electron')
+const {app, Menu, BrowserWindow, Tray, globalShortcut,ipcMain,dialog  } = require('electron')
 const path = require('path')
 const io = require('socket.io-client');
 const socket = io('http://localhost:3000');
@@ -7,7 +7,7 @@ function createWindow() {
     let win = new BrowserWindow({width: 800, height: 500, frame: false,transparent: true, alwaysOnTop: false,movable:true})
     // win.setIgnoreMouseEvents(true)
     win.loadFile('index.html')
-    //win.openDevTools()
+    win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
 }
 
@@ -34,6 +34,20 @@ app.on('ready', function () {
             label: '退出',
             click: function () {
                 saveWord();
+            }
+        },
+        {
+            label:'导入字体',
+            click:function () {
+                dialog.showOpenDialog({
+                    title:'导入字体',
+                    filters:[{name:'Custom File Type',extensions:['ttf']}]
+                },function (files) {
+                    console.log(files)
+                    if(files.length > 0 ){
+                        socket.emit('change font',files[0]);
+                    }
+                })
             }
         }
     ])
