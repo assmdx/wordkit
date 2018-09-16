@@ -12,7 +12,9 @@
 ./
 ├── icon.ico          //图标
 ├── index.html        //程序主界面
-├── index.js          //控制显示句子的js
+├── index.js          //控制显示word的js
+├── addWord.html        //添加句子界面
+├── addWord.js          //控制添加句子的js
 ├── LICENSE           // 发布协议
 ├── main.js           // electron控制程序界面显示的js
 ├── package.json      //依赖信息
