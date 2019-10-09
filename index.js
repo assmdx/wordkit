@@ -1,64 +1,54 @@
 const fs = require('fs')
 const path = require('path')
-const app = require('express')();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 const wordsFilePath = path.join(__dirname, 'word.json')
+const {ipcRenderer} =  require('electron')
 
 let words
 
 if (fs.existsSync(wordsFilePath)) {
     fs.readFile(wordsFilePath, (err, data) => {
         words = JSON.parse(data).word
-        console.log(words)
         document.getElementById("showWord").innerText = words[0]
         setInterval(function () {
             let lenOfWords = words.length
             let randomIndex = Math.floor(Math.random() * lenOfWords)
             document.getElementById("showWord").innerText = words[randomIndex]
-        }, 60000)
+        }, 3000)
     })
 }
 
-//接收添加word的请求
-io.on('connection', (socket) => {
-    console.log('a user want to add Word');
 
-    socket.on('disconnect', () => {
-        console.log('a user disconnected');
-    });
-    //添加句子
-    socket.on('add word', function (msg) {
-        console.log('add word', msg);
-        words.push(msg);
-        socket.broadcast.emit('add word success~');
-    });
-    //将句子保存至本地
-    socket.on('save word', function (msg) {
-        console.log('a user want to exit and save word')
-        fs.writeFileSync(wordsFilePath, JSON.stringify({
-            word: words
-        }))
-        io.emit('save file success', 'reply');
-    });
-    socket.on('change font', function (fontPath) {
-        //copy file to asstes/font
-        let fontFileName = fontPath.substring(fontPath.lastIndexOf('\\'))
-        fs.copyFileSync(fontPath, path.join(__dirname, 'assets/font/' + fontFileName))
+ipcRenderer.on('change font', (event, fontPath) => {
+    //alert('change font received'+fontPath) // prints "ping"
 
-        //change font face
-        let newStyle = document.createElement('style');
-        newStyle.appendChild(document.createTextNode(`
+    //copy file to asstes/font
+    let fontFileName = fontPath.substring(fontPath.lastIndexOf('\\'))
+    fs.copyFileSync(fontPath, path.join(__dirname, 'assets/font/' + fontFileName))
+
+    //change font face
+    let newStyle = document.createElement('style');
+    newStyle.appendChild(document.createTextNode(`
         @font-face {
             font-family: 'wordkit';
             src: url('assets/font/${fontFileName}') format('truetype');
         }`));
 
-        document.head.appendChild(newStyle);
-    });
-});
+    document.head.appendChild(newStyle);
 
-http.listen(3000, function () {
-    console.log('listening on *:3000');
-});
+})
 
+ipcRenderer.on('save word', (event, msg) => {
+    words.push(msg);
+
+})
+
+ipcRenderer.on('add word from main', (event, msg) => {
+    words.push(msg);
+})
+
+ipcRenderer.on('save word', (event, msg) => {
+    fs.writeFileSync(wordsFilePath, JSON.stringify({
+        word: words
+    }))
+    ipcRenderer.send('save word done','')
+})

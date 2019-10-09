@@ -1,14 +1,10 @@
-const io = require('socket.io-client');
-const socket = io('http://localhost:3000');
-const remote = require('electron').remote;
+const {remote, ipcRenderer} = require('electron');
 
 function addWord(event){
-    console.log(event.target.value)
     if(event.keyCode === 13){
-        console.log('I want to add ', event.target.value);
         try{
             if(event.target.value){
-                socket.emit('add word', event.target.value);
+                ipcRenderer.send('add word', event.target.value)
             }
             remote.getCurrentWindow().close();
         }

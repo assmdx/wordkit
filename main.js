@@ -1,24 +1,41 @@
-const {app, Menu, BrowserWindow, Tray, globalShortcut,ipcMain,dialog  } = require('electron')
+const {app, Menu, BrowserWindow, Tray, globalShortcut, dialog, ipcMain} = require('electron')
 const path = require('path')
-const io = require('socket.io-client');
-const socket = io('http://localhost:3000');
+
+// 主窗口进程
+var mainWindow = null
 
 function createWindow() {
-    let win = new BrowserWindow({width: 800, height: 200, frame: false,transparent: true, alwaysOnTop: false,movable:true})
-    // win.setIgnoreMouseEvents(true)
+    let win = new BrowserWindow({
+        width: 800,
+        height: 200,
+        frame: false,
+        transparent: true,
+        alwaysOnTop: false,
+        movable: false
+    })
+    win.setIgnoreMouseEvents(true)
     win.loadFile('index.html')
     //win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
+    mainWindow = win
 }
 
 //添加键盘快捷键
 function addKeyBind() {
     globalShortcut.register('ctrl+k+0', function () {
-        let addWordWin = new BrowserWindow({width: 1200, height: 120, alwaysOnTop: true,frame: false,transparent:true,resizable:false,movable:false})
+        let addWordWin = new BrowserWindow({
+            width: 1200,
+            height: 120,
+            alwaysOnTop: true,
+            frame: false,
+            transparent: true,
+            resizable: false,
+            movable: false
+        })
         addWordWin.setIgnoreMouseEvents(false)
         addWordWin.loadFile('addWord.html')
         //addWordWin.openDevTools()
-        addWordWin.addListener('closeThisWindow',()=>{
+        addWordWin.addListener('closeThisWindow', () => {
             addWordWin.close()
         })
     })
@@ -33,19 +50,18 @@ app.on('ready', function () {
         {
             label: '退出',
             click: function () {
-                saveWord();
+                mainWindow.webContents.send('save word',  '')
             }
         },
         {
-            label:'导入字体',
-            click:function () {
+            label: '导入字体',
+            click: function () {
                 dialog.showOpenDialog({
-                    title:'导入字体',
-                    filters:[{name:'Custom File Type',extensions:['ttf']}]
-                },function (files) {
-                    console.log(files)
-                    if(files.length > 0 ){
-                        socket.emit('change font',files[0]);
+                    title: '导入字体',
+                    filters: [{name: 'Custom File Type', extensions: ['ttf']}]
+                }, function (files) {
+                    if (files.length > 0) {
+                        mainWindow.webContents.send('change font',  files[0])
                     }
                 })
             }
@@ -58,17 +74,17 @@ app.on('ready', function () {
 })
 
 //设置开机自动启动
-
-
 app.setLoginItemSettings({
     openAtLogin: true,
     path: app.getPath('exe')
 })
 
-function saveWord(){
-    socket.emit('save word','');
-}
+//添加新的词中转消息
+ipcMain.on('add word', (event, msg) => {
+    mainWindow.webContents.send('add word from main',  msg)
+})
 
-socket.on('save file success',(msg)=>{
+//word列表保存成功，关闭程序
+ipcMain.on('save word done', (event, msg) => {
     app.quit();
 })
