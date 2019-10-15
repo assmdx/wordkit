@@ -4,18 +4,20 @@ const path = require('path')
 // 主窗口进程
 var mainWindow = null
 
+const isDebug = process.argv.slice(2)[0].split("=")[1] === "true"
+
 function createWindow() {
     let win = new BrowserWindow({
         width: 800,
         height: 200,
         frame: false,
-        transparent: true,
+        transparent: isDebug ? false : true,
         alwaysOnTop: false,
         movable: false
     })
-    win.setIgnoreMouseEvents(true)
+    win.setIgnoreMouseEvents(isDebug ? false : true)
     win.loadFile('index.html')
-    //win.openDevTools()
+    isDebug && win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
     mainWindow = win
 }
@@ -60,7 +62,7 @@ app.on('ready', function () {
                     title: '导入字体',
                     filters: [{name: 'Custom File Type', extensions: ['ttf']}]
                 }, function (files) {
-                    if (files.length > 0) {
+                    if (files && files.length > 0) {
                         mainWindow.webContents.send('change font',  files[0])
                     }
                 })
