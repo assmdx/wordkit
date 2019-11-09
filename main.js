@@ -15,9 +15,10 @@ function createWindow() {
         alwaysOnTop: false,
         movable: false
     })
-    win.setIgnoreMouseEvents(isDebug ? false : true)
+    //win.setIgnoreMouseEvents(isDebug ? false : true)
+    win.setIgnoreMouseEvents(true)
     win.loadFile('index.html')
-    isDebug && win.openDevTools()
+    //isDebug && win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
     mainWindow = win
 }
@@ -50,12 +51,6 @@ app.on('ready', function () {
     tray = new Tray(path.join(__dirname, 'icon.ico'))
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: '退出',
-            click: function () {
-                mainWindow.webContents.send('save word',  '')
-            }
-        },
-        {
             label: '导入字体',
             click: function () {
                 dialog.showOpenDialog({
@@ -66,6 +61,34 @@ app.on('ready', function () {
                         mainWindow.webContents.send('change font',  files[0])
                     }
                 })
+            }
+        },
+        {
+            label:'仪表盘',
+            click:() => {
+                const {resolve} = path;
+                let dashboard = new BrowserWindow({
+                    width: 300,
+                    height: 600,
+                    alwaysOnTop: false,
+                    frame: true,
+                    transparent: false,
+                    resizable: true,
+                    movable: true
+                })
+                dashboard.openDevTools()
+                dashboard.setIgnoreMouseEvents(false)
+                dashboard.loadFile( resolve(__dirname, 'view/dist/dashboard.html'))
+                //addWordWin.openDevTools()
+                dashboard.addListener('closeThisWindow', () => {
+                    dashboard.close()
+                })
+            }
+        },
+        {
+            label: '退出',
+            click: function () {
+                mainWindow.webContents.send('save word',  '')
             }
         }
     ])
