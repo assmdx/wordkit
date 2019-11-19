@@ -4,13 +4,11 @@
   "description": "随机在屏幕上打一行字",
   "main": "main.js",
   "scripts": {
-    "test": "electron .",
-    "start": "electron . isDebug=true",
+    "test": "electron main/main.js",
+    "start": "electron main/main.js isDebug=true",
     "build_exe": "electron-packager . --overwrite",
     "build": "electron-builder --win --ia32",
-    "dist": "electron-builder --win --x64",
-    "dev": "webpack-dev-server --inline --progress --watch --watch-content-base --config view/config/webpack.dev.config.js",
-    "dev2": "webpack -p --config view/config/webpack.prod.config.js && electron . isDebug=true"
+    "dist": "electron-builder --win --x64"
   },
   "repository": {
     "type": "git",
@@ -22,24 +20,7 @@
     "url": "https://github.com/assmdx/wordkit/issues"
   },
   "homepage": "https://github.com/assmdx/wordkit#readme",
-  "dependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-proposal-class-properties": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
-    "antd": "^3.25.0",
-    "babel-loader": "^8.0.6",
-    "babel-preset-env": "^1.7.0",
-    "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^3.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "style-loader": "^1.0.0",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "electron": "^2.0.8",
     "electron-builder": "^20.27.1",
