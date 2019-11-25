@@ -4,14 +4,16 @@ const wordsFilePath = path.join(__dirname, 'word.json')
 
 let words
 var fonttype
+var freshTimer
 
 if (fs.existsSync(wordsFilePath)) {
     fs.readFile(wordsFilePath, (err, data) => {
-        //读取默认配置
-        var settings = JSON.parse(data)
+        //读取默认配置,优先从localStorage中读取，然后再选words.json中的数据
+        var cachedSetting = getConfig()
+        var settings = cachedSetting ? cachedSetting : JSON.parse(data)
         words = settings.word
         fonttype = fontFileName = settings.font || "邢世新硬笔行书简体.ttf"
-
+        timer = settings["timer"] ? settings["timer"] : 3000
         // 设置初始word
         document.getElementById("showWord").innerText = words[0]
 
@@ -19,11 +21,7 @@ if (fs.existsSync(wordsFilePath)) {
         changefont(fontFileName)
 
         //设置时钟让word切换展示
-        setInterval(function () {
-            let lenOfWords = words.length
-            let randomIndex = Math.floor(Math.random() * lenOfWords)
-            document.getElementById("showWord").innerText = words[randomIndex]
-        }, 3000)
+        freshTimer = setTimer(timer)
         //初始化本地数据缓存
         setConfig(undefined,settings)
     })
@@ -54,16 +52,21 @@ ipcRenderer.on('save word before exit', (event, msg) => {
     fs.writeFileSync(wordsFilePath, JSON.stringify({
         word: words,
         font:fonttype,
-        fontSize:wordkit.fontSize
+        fontSize:wordkit.fontSize,
+        timer:wordkit.timer
     }))
     ipcRenderer.send('save word done','')
 })
 
 ipcRenderer.on('Change Font Size',  (event, msg) => {
-    console.log(msg)
     $("#showWord").css("font-size", msg + "px");
 })
 
+ipcRenderer.on('Change Timer',  (event, msg) => {
+    console.log(msg)
+    clearInterval(freshTimer)
+    freshTimer = setTimer(msg)
+})
 
 function changefont(fontFileName) {
     setConfig('font',fontFileName)
@@ -82,4 +85,13 @@ function changefont(fontFileName) {
     }
 
     document.head.appendChild(newStyle)
+}
+
+function setTimer(t) {
+    return setInterval(function () {
+        let lenOfWords = words.length
+        let randomIndex = Math.floor(Math.random() * lenOfWords)
+        document.getElementById("showWord").innerText = words[randomIndex]
+        console.log(new Date().getSeconds())
+    }, t)
 }

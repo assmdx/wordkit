@@ -13,10 +13,20 @@
  	<div>
 		<!--改变字体大小-->
 		<div class="input-group">
-			<input type="text" id="fontSizeInput" class="form-control" οninput="value=value.replace(/[^\d]/g,'')" placeholder="添加字体大小" aria-label="change word size" aria-describedby="button-addon4">
+			<label for="">字体大小</label>
+			<input type="number" id="fontSizeInput" class="form-control"  placeholder="添加字体大小" aria-label="change word size" aria-describedby="button-addon4">
 			<div class="input-group-append" id="button-addon4">
 				<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonAdd">+</button>
 				<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonDel">-</button>
+			</div>
+		</div>
+		<!--改变刷新的时间间隔-->
+		<div class="input-group mb-3">
+			<label>刷新的时间间隔</label>
+			<input type="number" id="timer" class="form-control" placeholder="1000" aria-label="Recipient's username" aria-describedby="button-addon2">
+			<div class="input-group-append" id="button-addon3">
+				<button class="btn btn-outline-secondary" type="button" id="timerAdd">+</button>
+				<button class="btn btn-outline-secondary" type="button" id="timerDel">-</button>
 			</div>
 		</div>
  	</div>
@@ -34,9 +44,11 @@
         var fontSize = wordkit["fontSize"] ? wordkit['fontSize'] : 36
 		$("#fontSizeInput").val(fontSize)
 
-
+        var timer = wordkit["timer"] ? wordkit['timer'] : 3000
+        $("#timer").val(timer)
 
     },500)
+
 
 	//监听字体大小变化
 	$('#changeWordSizeButtonAdd').click(() => {
@@ -53,7 +65,21 @@
         setConfig('fontSize',ans)
         sendMsgBetweenRender('Change Font Size',ans)
     })
-
+	//监听刷新时间间隔变化
+	$("#timerAdd").click(()=>{
+        const val = parseInt($("#timer").val())
+        const ans = val + 500
+        $("#timer").val(ans)
+        setConfig('timer',ans)
+        sendMsgBetweenRender('Change Timer',ans)
+    })
+    $("#timerDel").click(()=>{
+        const val = parseInt($("#timer").val())
+        const ans = val - 500 >= 1000 ? val - 500 : 1000
+        $("#timer").val(ans)
+        setConfig('timer',ans)
+        sendMsgBetweenRender('Change Timer',ans)
+    })
 
 </script>
 </html>
