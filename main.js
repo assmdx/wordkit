@@ -16,9 +16,9 @@ function createWindow() {
         movable: false
     })
     //win.setIgnoreMouseEvents(isDebug ? false : true)
-    win.setIgnoreMouseEvents(true)
+    !isDebug && win.setIgnoreMouseEvents(true)
     win.loadFile('index.html')
-    //isDebug && win.openDevTools()
+    isDebug && win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
     mainWindow = win
 }
@@ -78,7 +78,7 @@ app.on('ready', function () {
                 })
                 dashboard.openDevTools()
                 dashboard.setIgnoreMouseEvents(false)
-                dashboard.loadFile( resolve(__dirname, 'view/dist/dashboard.html'))
+                dashboard.loadFile( resolve(__dirname, './dashboard.html'))
                 //addWordWin.openDevTools()
                 dashboard.addListener('closeThisWindow', () => {
                     dashboard.close()
@@ -88,7 +88,7 @@ app.on('ready', function () {
         {
             label: '退出',
             click: function () {
-                mainWindow.webContents.send('save word',  '')
+                mainWindow.webContents.send('save word before exit',  '')
             }
         }
     ])
@@ -112,4 +112,11 @@ ipcMain.on('add word', (event, msg) => {
 //word列表保存成功，关闭程序
 ipcMain.on('save word done', (event, msg) => {
     app.quit();
+})
+
+//负责不同子进程之间的通信中转
+ipcMain.on('msgBetweenRender',(ebent, msg) => {
+    const {EVENT_TYPE,MSG} = msg
+    console.log(EVENT_TYPE,MSG)
+    mainWindow.webContents.send(EVENT_TYPE, MSG)
 })

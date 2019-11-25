@@ -9,16 +9,33 @@
             src: url('assets/font/邢世新硬笔行书简体.ttf') format('truetype');
         }
     </style>
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="./assets/js/jquery-3.4.1.min.js"></script>
+    <script>if (window.module) module = window.module;</script>
 </head>
 <!--<body style="-webkit-app-region: drag">-->
 <body style="-webkit-app-region: drag">
-    <h1 id="showWord"></h1>
+    <div>
+        <h1 id="showWord"></h1>
+    </div>
 </body>
-<script type="text/javascript" src="index.js"></script>
+<script src="./util.js"></script>
+<script src="./index.js"></script>
 <style type="text/css">
     #showWord {
         font-family: 'wordkit'; /* 使用 @font-face 自定义的字体 */
         /*font-size: 80px;*/
     }
 </style>
+
+
+<script>
+    setTimeout(()=>{
+        // 设置字体大小
+        const wordkit = getConfig()
+        var fontSize = wordkit["fontSize"] ? wordkit['fontSize'] : 36
+        $("#showWord").css("font-size",`${fontSize}px`)
+    },500)
+</script>
+
 </html>

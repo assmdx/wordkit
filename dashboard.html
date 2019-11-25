@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>仪表盘</title>
+	<link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css">
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script src="./assets/js/jquery-3.4.1.min.js"></script>
+	<script>if (window.module) module = window.module;</script>
+</head>
+
+<body>
+ 	<div>
+		<!--改变字体大小-->
+		<div class="input-group">
+			<input type="text" id="fontSizeInput" class="form-control" οninput="value=value.replace(/[^\d]/g,'')" placeholder="添加字体大小" aria-label="change word size" aria-describedby="button-addon4">
+			<div class="input-group-append" id="button-addon4">
+				<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonAdd">+</button>
+				<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonDel">-</button>
+			</div>
+		</div>
+ 	</div>
+</body>
+
+
+<script src="./assets/js/popper.min.js"></script>
+<script src="./assets/js/bootstrap.min.js" defer></script>
+<script src="./util.js"></script>
+<script type="text/javascript">
+	//初始化配仪表盘页面
+    setTimeout(()=>{
+        // 设置字体大小
+        const wordkit = getConfig()
+        var fontSize = wordkit["fontSize"] ? wordkit['fontSize'] : 36
+		$("#fontSizeInput").val(fontSize)
+
+
+
+    },500)
+
+	//监听字体大小变化
+	$('#changeWordSizeButtonAdd').click(() => {
+	    const val = parseInt($("#fontSizeInput").val())
+		const ans = val + 1
+        $("#fontSizeInput").val(ans)
+        setConfig('fontSize',ans)
+        sendMsgBetweenRender('Change Font Size',ans)
+	})
+    $('#changeWordSizeButtonDel').click(() => {
+        const val = parseInt($("#fontSizeInput").val())
+        const ans = val - 1 > 0 ? val -1 :0
+        $("#fontSizeInput").val(ans)
+        setConfig('fontSize',ans)
+        sendMsgBetweenRender('Change Font Size',ans)
+    })
+
+
+</script>
+</html>
