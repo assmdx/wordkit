@@ -43,7 +43,8 @@
   "devDependencies": {
     "electron": "^2.0.8",
     "electron-builder": "^20.27.1",
-    "electron-packager": "^12.1.0"
+    "electron-packager": "^12.1.0",
+    "husky": "^3.1.0"
   },
   "build": {
     "appId": "com.assmdx.wordkit",

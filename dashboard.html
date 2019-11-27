@@ -7,6 +7,17 @@
 	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script src="./assets/js/jquery-3.4.1.min.js"></script>
 	<script>if (window.module) module = window.module;</script>
+	<style>
+		.wordsContainer {
+			height:400px;
+			overflow-y: scroll;
+		}
+		.wordsContainer::-webkit-scrollbar{
+			width:0px;
+			opacity:0;
+			-webkit-overflow-scrolling: touch;
+		}
+	</style>
 </head>
 
 <body>
@@ -31,6 +42,13 @@
 				<button class="btn btn-outline-secondary" type="button" id="timerDel">-</button>
 			</div>
 		</div>
+
+		<!--words管理-->
+		<div class="wordsContainer">
+			<ul class="list-group" id="wordsList">
+			</ul>
+		</div>
+
  	</div>
 </body>
 
@@ -46,9 +64,16 @@
         var fontSize = wordkit["fontSize"] ? wordkit['fontSize'] : 36
 		$("#fontSizeInput").val(fontSize)
 
+		//设置刷新间隔
         var timer = wordkit["timer"] ? wordkit['timer'] : 3000
         $("#timer").val(timer)
 
+		//设置words列表
+		let w = wordkit["word"]
+		var words = w ? w : [""]
+		words.forEach(v => {
+		    $("#wordsList").append(`<li class="list-group-item">${v}</li>`)
+		})
     },500)
 
 
@@ -78,7 +103,6 @@
             setConfig('fontSize',ans)
             sendMsgBetweenRender('Change Font Size',ans)
 		}
-		console.log(val)
 	})
 
 	//监听刷新时间间隔变化
@@ -96,6 +120,24 @@
         setConfig('timer',ans)
         sendMsgBetweenRender('Change Timer',ans)
     })
+
+	//监听word列表的点击，右键，修改，删除
+	var lastchild = null
+	$("#wordsList").on('mousedown','li',function(e){
+	    if (e.button == 0) {
+	        //左键点击
+	        if(this && this === lastchild) {
+                $(this).removeClass('active')//??????????????????
+				lastchild = null
+			} else {
+                $(this).addClass('active')//??????????????????
+				if(lastchild)  {
+                    $(lastchild).removeClass('active')
+                }
+				lastchild = this
+			}
+		}
+	})
 
 </script>
 </html>
