@@ -117,6 +117,5 @@ ipcMain.on('save word done', (event, msg) => {
 //负责不同子进程之间的通信中转
 ipcMain.on('msgBetweenRender',(ebent, msg) => {
     const {EVENT_TYPE,MSG} = msg
-    console.log(EVENT_TYPE,MSG)
     mainWindow.webContents.send(EVENT_TYPE, MSG)
 })

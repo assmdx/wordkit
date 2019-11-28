@@ -17,6 +17,14 @@
 			opacity:0;
 			-webkit-overflow-scrolling: touch;
 		}
+		.modal {
+			width:180px;
+		}
+		#delWordButton {
+			display: none;
+			position: fixed;
+			z-index: 999;
+		}
 	</style>
 </head>
 
@@ -55,6 +63,18 @@
 			</ul>
 		</div>
 
+		<!-- 删除word -->
+		<button type="button" class="btn btn-danger" id="delWordButton" onclick="showDelWordModal()">删除</button>
+		<div id="delWordModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" onclick="delWord()">删除</button>
+					</div>
+				</div>
+			</div>
+		</div>
  	</div>
 </body>
 
@@ -130,6 +150,7 @@
 
 	//监听word列表的点击，右键，修改，删除
 	var lastchild = null
+	var targetToDel = null
 	$("#wordsList").on('mousedown','li',function(e){
 	    if (e.button == 0) {
 	        //左键点击
@@ -143,8 +164,31 @@
                 }
 				lastchild = this
 			}
+		} else {
+            //右键点击
+            targetToDel = this
+			const x = e.pageX
+			const y = e.pageY
+			$("#delWordButton").css({'display':"block",'left':`${x}px`, 'top':`${y}px`})
 		}
 	})
+	function showDelWordModal() {
+        $("#delWordButton").css({'display':'none'})
+        $('#delWordModal').modal('toggle')
+	}
+	function delWord() {
+        //删除单词
+		const w = $(targetToDel).text()
+        $(targetToDel).remove()
+		let words = getConfig('word')
+		words = words.filter(v => v !== w)
+		setConfig('word',words)
+		setTimeout(()=>{
+            sendMsgBetweenRender('Del Word')
+
+		},50)
+        $('#delWordModal').modal('hide')
+	}
 
 	function addwordInDashboard(word) {
 		if(words.findIndex(v => v === word) === -1) {

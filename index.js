@@ -5,6 +5,7 @@ const wordsFilePath = path.join(__dirname, 'word.json')
 let words
 var fonttype
 var freshTimer
+var timer
 
 if (fs.existsSync(wordsFilePath)) {
     fs.readFile(wordsFilePath, (err, data) => {
@@ -32,7 +33,6 @@ ipcRenderer.on('change font', (event, fontPath) => {
     //复制字体
     let fontFileName = fontPath.substring(fontPath.lastIndexOf('\\') + 1)
 
-    console.log(fontPath, fontFileName)
     fs.copyFileSync(fontPath, path.join(__dirname, 'assets/font/' + fontFileName))
 
     //change font face
@@ -63,10 +63,17 @@ ipcRenderer.on('Change Font Size',  (event, msg) => {
 })
 
 ipcRenderer.on('Change Timer',  (event, msg) => {
-    console.log(msg)
     clearInterval(freshTimer)
+    timer = msg
     freshTimer = setTimer(msg)
 })
+
+ipcRenderer.on('Del Word',  (event, msg) => {
+    words = getConfig('word')
+    clearInterval(freshTimer)
+    freshTimer = setTimer(timer)
+})
+
 
 function changefont(fontFileName) {
     setConfig('font',fontFileName)
@@ -92,6 +99,5 @@ function setTimer(t) {
         let lenOfWords = words.length
         let randomIndex = Math.floor(Math.random() * lenOfWords)
         document.getElementById("showWord").innerText = words[randomIndex]
-        console.log(new Date().getSeconds())
     }, t)
 }
