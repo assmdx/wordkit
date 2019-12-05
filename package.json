@@ -8,9 +8,7 @@
     "start": "electron . isDebug=true",
     "build_exe": "electron-packager . --overwrite",
     "build": "electron-builder --win --ia32",
-    "dist": "electron-builder --win --x64",
-    "dev": "webpack-dev-server --inline --progress --watch --watch-content-base --config view/config/webpack.dev.config.js",
-    "dev2": "webpack -p --config view/config/webpack.prod.config.js && electron . isDebug=true"
+    "dist": "electron-builder --win --x64"
   },
   "repository": {
     "type": "git",

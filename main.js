@@ -1,10 +1,10 @@
-const {app, Menu, BrowserWindow, Tray, globalShortcut, dialog, ipcMain} = require('electron')
+const {app, Menu, BrowserWindow, Tray, globalShortcut, dialog, ipcMain } = require('electron')
 const path = require('path')
 
 // 主窗口进程
 var mainWindow = null
-
-const isDebug = process.argv.slice(2)[0].split("=")[1] === "true"
+var screen = null
+const isDebug = process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1] === "true"
 
 function createWindow() {
     let win = new BrowserWindow({
@@ -46,6 +46,7 @@ function addKeyBind() {
 
 let tray
 app.on('ready', function () {
+    screen = (require('electron')).screen
     createWindow();
     addKeyBind();
     tray = new Tray(path.join(__dirname, 'icon.ico'))
@@ -68,18 +69,19 @@ app.on('ready', function () {
             click:() => {
                 const {resolve} = path;
                 let dashboard = new BrowserWindow({
+                    x:screen.getPrimaryDisplay().workAreaSize.width -350,
+                    y:50,
                     width: 300,
-                    height: 600,
+                    height: 700,
                     alwaysOnTop: false,
-                    frame: true,
+                    frame: false,
                     transparent: false,
                     resizable: true,
                     movable: true
                 })
-                dashboard.openDevTools()
+                isDebug && dashboard.openDevTools()
                 dashboard.setIgnoreMouseEvents(false)
                 dashboard.loadFile( resolve(__dirname, './dashboard.html'))
-                //addWordWin.openDevTools()
                 dashboard.addListener('closeThisWindow', () => {
                     dashboard.close()
                 })
