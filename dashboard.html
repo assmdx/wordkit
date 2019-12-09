@@ -85,10 +85,33 @@
 			background: #343a40;
 			color:#fff;
 		}
+
+		.header {
+			position:fixed;
+			width:100%;
+			height:30px;
+			background: transparent;
+			background-color: rgba(255,255,255,0.5);
+			padding:5px;
+		}
+		.header:hover img {
+			width:18px;
+			height:18px;
+		}
+		.closeWindowButton {
+			position:absolute;
+			left:5px;
+			top:5px;
+			width:15px;
+			height:15px;
+		}
 	</style>
 </head>
 
 <body>
+	<div class="header">
+		<img class="closeWindowButton" src="./assets/img/close.png" onclick="closeDashboard()">
+	</div>
  	<div class="settingContainer">
 		<!--改变字体大小-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -294,5 +317,10 @@
             addwordInDashboard(e.target.value)
         }
 	})
+
+	//关闭dashboard面板
+    function closeDashboard() {
+        window.close()
+	}
 </script>
 </html>
