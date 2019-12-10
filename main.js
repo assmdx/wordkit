@@ -77,7 +77,11 @@ app.on('ready', function () {
                     frame: false,
                     transparent: false,
                     resizable: true,
-                    movable: true
+                    movable: true,
+                    show: false
+                })
+                dashboard.once('ready-to-show', () => {
+                    dashboard.show()
                 })
                 isDebug && dashboard.openDevTools()
                 dashboard.setIgnoreMouseEvents(false)
