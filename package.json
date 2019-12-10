@@ -39,6 +39,7 @@
     "webpack-dev-server": "^3.9.0"
   },
   "devDependencies": {
+    "cz-conventional-changelog": "^3.0.2",
     "electron": "^2.0.8",
     "electron-builder": "^20.27.1",
     "electron-packager": "^12.1.0",
@@ -57,6 +58,11 @@
         "nsis",
         "zip"
       ]
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }

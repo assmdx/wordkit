@@ -305,6 +305,9 @@
 		},50)
         $('#delWordModal').modal('hide')
 	}
+    $('body').click(function() {
+        $("#delWordButton").css({'display':'none'})
+	});
 
 	function addwordInDashboard(word) {
 		if(words.findIndex(v => v === word) === -1) {
