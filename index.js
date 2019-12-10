@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const wordsFilePath = path.join(__dirname, 'word.json')
+const {eventList} = require("./config")
 
 let words
 var fonttype
@@ -29,7 +30,7 @@ if (fs.existsSync(wordsFilePath)) {
 }
 
 
-ipcRenderer.on('change font', (event, fontPath) => {
+ipcRenderer.on(eventList.CHANGE_FONT, (event, fontPath) => {
     //复制字体
     let fontFileName = fontPath.substring(fontPath.lastIndexOf('\\') + 1)
 
@@ -42,12 +43,12 @@ ipcRenderer.on('change font', (event, fontPath) => {
 
 })
 
-ipcRenderer.on('add word from main', (event, msg) => {
+ipcRenderer.on(eventList.ADD_WORD_FROM_MAIN, (event, msg) => {
     words.push(msg);
     setConfig('word',words)
 })
 
-ipcRenderer.on('save word before exit', (event, msg) => {
+ipcRenderer.on(eventList.SAVE_WORD_BEFORE_EXIT, (event, msg) => {
     let wordkit = getConfig()
     fs.writeFileSync(wordsFilePath, JSON.stringify({
         word: words,
@@ -58,17 +59,17 @@ ipcRenderer.on('save word before exit', (event, msg) => {
     ipcRenderer.send('save word done','')
 })
 
-ipcRenderer.on('Change Font Size',  (event, msg) => {
+ipcRenderer.on(eventList.CHANGE_FONT_SIZE,  (event, msg) => {
     $("#showWord").css("font-size", msg + "px");
 })
 
-ipcRenderer.on('Change Timer',  (event, msg) => {
+ipcRenderer.on(eventList.CHANGE_TIMER,  (event, msg) => {
     clearInterval(freshTimer)
     timer = msg
     freshTimer = setTimer(msg)
 })
 
-ipcRenderer.on('Del Word',  (event, msg) => {
+ipcRenderer.on(eventList.DEL_WORD,  (event, msg) => {
     words = getConfig('word')
     clearInterval(freshTimer)
     freshTimer = setTimer(timer)

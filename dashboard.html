@@ -197,6 +197,8 @@
 <script src="./assets/js/bootstrap.min.js" defer></script>
 <script src="./util.js"></script>
 <script type="text/javascript">
+	const {eventList} = require("./config")
+
 	//初始化配仪表盘页面
     var words = []
     setTimeout(()=>{
@@ -224,14 +226,14 @@
 		const ans = val + 1 > 100 ? 100 : val + 1
         $("#fontSizeInput").val(ans)
         setConfig('fontSize',ans)
-        sendMsgBetweenRender('Change Font Size',ans)
+        sendMsgBetweenRender(eventList.CHANGE_FONT_SIZE,ans)
 	})
     $('#changeWordSizeButtonDel').click(() => {
         const val = parseInt($("#fontSizeInput").val())
         const ans = val - 1 > 0 ? val -1 :0
         $("#fontSizeInput").val(ans)
         setConfig('fontSize',ans)
-        sendMsgBetweenRender('Change Font Size',ans)
+        sendMsgBetweenRender(eventList.CHANGE_FONT_SIZE,ans)
     })
 	$("#fontSizeInput").blur(()=>{
         const val = parseInt($("#fontSizeInput").val())
@@ -242,7 +244,7 @@
             ans = val > 0 ? val : 0
             $("#fontSizeInput").val(ans)
             setConfig('fontSize',ans)
-            sendMsgBetweenRender('Change Font Size',ans)
+            sendMsgBetweenRender(eventList.CHANGE_FONT_SIZE,ans)
 		}
 	})
 
@@ -252,14 +254,14 @@
         const ans = val + 500
         $("#timer").val(ans)
         setConfig('timer',ans)
-        sendMsgBetweenRender('Change Timer',ans)
+        sendMsgBetweenRender(eventList.CHANGE_TIMER,ans)
     })
     $("#timerDel").click(()=>{
         const val = parseInt($("#timer").val())
         const ans = val - 500 >= 1000 ? val - 500 : 1000
         $("#timer").val(ans)
         setConfig('timer',ans)
-        sendMsgBetweenRender('Change Timer',ans)
+        sendMsgBetweenRender(eventList.CHANGE_TIMER,ans)
     })
 
 	//监听word列表的点击，右键，修改，删除
@@ -298,7 +300,7 @@
 		words = words.filter(v => v !== w)
 		setConfig('word',words)
 		setTimeout(()=>{
-            sendMsgBetweenRender('Del Word')
+            sendMsgBetweenRender(eventList.DEL_WORD)
 
 		},50)
         $('#delWordModal').modal('hide')
