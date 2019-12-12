@@ -1,6 +1,6 @@
 # wordkit
 
-随机在屏幕上打一行字的程序
+wordkit：记录那些让自己刻骨铭心的话，并显示在桌面上，来时刻提醒自己不要忘记。
 
 [![Depfu](https://img.shields.io/badge/npm-v8.11.2-green.svg)](https://github.com/assmdx/wordkit)
 
