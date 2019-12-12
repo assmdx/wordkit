@@ -263,6 +263,15 @@
         setConfig('timer',ans)
         sendMsgBetweenRender(eventList.CHANGE_TIMER,ans)
     })
+	$("#timer").keyup(()=>{
+	    let val = parseInt($("#timer").val())
+		const ans = getConfig('timer')
+		if(val && val !== ans) {
+	        val = val < 1000 ? 1000 : val;
+            setConfig('timer',val)
+            sendMsgBetweenRender(eventList.CHANGE_TIMER,val)
+		}
+	})
 
 	//监听word列表的点击，右键，修改，删除
 	var lastchild = null
