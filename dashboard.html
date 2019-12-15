@@ -215,9 +215,49 @@
 		let w = wordkit["word"]
         words = w ? w : [""]
 		words.forEach(v => {
-		    $("#wordsList").append(`<li class="list-group-item">${v}</li>`)
+		    $("#wordsList").append(`<li class="list-group-item" contenteditable="true">${v}</li>`)
 		})
     },500)
+	//监听列表字体的编辑变化
+	function updateWordsByListContent() {
+		let newWordArr = []
+		$(".list-group-item").map((index,v) => {
+		    newWordArr.push(v.innerHTML)
+		})
+		setConfig("word", newWordArr)
+	}
+    var canUpdate = true
+	var unflush = 0
+    $('body').on('focus', '[contenteditable]', function() {
+        const $this = $(this)
+        $this.data('before', $this.html())
+    }).on('blur keyup paste input', '[contenteditable]', function() {
+        const $this = $(this);
+        if ($this.data('before') !== $this.html()) {
+            $this.data('before', $this.html())
+            $this.trigger('change')
+        }
+		if(canUpdate) {
+			updateWordsByListContent()
+            canUpdate = false
+            setTimeout(()=>{
+                if (unflush > 0) {
+                    updateWordsByListContent()
+                    canUpdate = true
+                    unflush = 0
+                }
+            },1000)
+		} else {
+            unflush++
+            setTimeout(()=>{
+                if (unflush > 0) {
+                    updateWordsByListContent()
+                    canUpdate = true
+                    unflush = 0
+				}
+			},1000)
+		}
+    });
 
 
 	//监听字体大小变化
