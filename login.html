@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            user-select:none;
+        }
+        body, div, form {
+            margin:0;
+            padding: 0;
+        }
+        body {
+            background-image: url("./assets/img/login.jpg");
+            width:800px;
+            height:600px;
+            font-size: 14px;
+            /*border-radius: 20px;*/
+            font-family: "Microsoft YaHei UI Light";
+            font-weight: bold;
+        }
+        .loginContainer {
+            /*border-radius: 200px;*/
+            position: absolute;
+            top:300px;
+            left:200px;
+            width:400px;
+        }
+        .loginItem {
+            width:100%;
+            line-height:30px;
+            margin:10px;
+            text-align: center;
+            vertical-align: middle;
+            font-family: "Microsoft YaHei UI Light";
+            font-size:16px;
+            font-weight: lighter;
+            letter-spacing: 8px;
+        }
+        .loginInput {
+            border: 0px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+            background: transparent;
+            color:#20202e;
+        }
+        .loginInput:focus {
+            letter-spacing: 8px;
+            outline:none;
+            border-bottom: 2px solid rgba(0,0,0,1);
+        }
+        .loginButton {
+            padding:10px;
+            width:100%;
+            background-color:gray;
+            color:#fff;
+            border-radius: 5px;
+            border:0px;
+            font-family: "Microsoft YaHei UI Light";
+            font-size:16px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            outline: 0px;
+        }
+        .loginButton:hover {
+            background-color:#000000;
+        }
+        .tabChange {
+            position: fixed;
+            bottom:10px;
+            right:50px;
+        }
+        .tabNav {
+            color:#414141;
+            font-size:14px;
+            cursor: pointer;
+        }
+        .login {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!--居中-->
+    <div action="" class="loginContainer">
+        <!--表单要灰色的线，focus，波浪线要加深黑色-->
+        <input type="name" class="loginItem loginInput" placeholder="邮箱" onfocus="this.placeholder = ''" onblur="this.placeholder = '邮箱'">
+        <input type="password" class="loginItem loginInput" placeholder="密码" onfocus="this.placeholder = ''" onblur="this.placeholder = '密码'">
+        <div class="loginItem">
+            <button class="loginButton">登录</button>
+        </div>
+    </div>
+    <div class="tabChange">
+        <span class="tabNav">注册>>></span>
+        <span class="tabNav login" >登录></span>
+    </div>
+</body>
+</html>

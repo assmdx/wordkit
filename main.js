@@ -13,7 +13,7 @@ function createWindow() {
         frame: false,
         transparent: isDebug ? false : true,
         alwaysOnTop: false,
-        movable: false
+        movable: false,
     })
     //win.setIgnoreMouseEvents(isDebug ? false : true)
     !isDebug && win.setIgnoreMouseEvents(true)
@@ -21,6 +21,10 @@ function createWindow() {
     isDebug && win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
     mainWindow = win
+
+    // 阻止被最小化
+    const {DisableElectronWindowHiddenByWindowsD} = require('./disableWindowMinisize')
+    DisableElectronWindowHiddenByWindowsD(win)
 }
 
 //添加键盘快捷键
@@ -89,6 +93,28 @@ app.on('ready', function () {
                 dashboard.addListener('closeThisWindow', () => {
                     dashboard.close()
                 })
+            }
+        },
+        {
+            label: '登录',
+            click: function () {
+                let loginWindow = new BrowserWindow({
+                    x:screen.getPrimaryDisplay().workAreaSize.width/2 - 400,
+                    y:screen.getPrimaryDisplay().workAreaSize.height/2 - 300,
+                    width: 800,
+                    height: 600,
+                    alwaysOnTop: false,
+                    frame: false,
+                    // transparent: false,
+                    resizable: false,
+                    movable: true,
+                    show: false
+                })
+                loginWindow.once('ready-to-show', () => {
+                    loginWindow.show()
+                })
+                const {resolve} = path;
+                loginWindow.loadFile( resolve(__dirname, './login.html'))
             }
         },
         {

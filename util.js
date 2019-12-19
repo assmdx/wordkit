@@ -29,3 +29,4 @@ function sendMsgBetweenRender(EVENT_TYPE,MSG){
         MSG
     })
 }
+
