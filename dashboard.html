@@ -8,6 +8,15 @@
 	<script src="./assets/js/jquery-3.4.1.min.js"></script>
 	<script>if (window.module) module = window.module;</script>
 	<style>
+        .fs1 {
+            font-size: 16px;
+        }
+        .fs2 {
+            font-size: 14px;
+        }
+        .fs3 {
+            font-size: 12px;
+        }
 		* {
 			font-family: "微软雅黑 Light";
 		}
@@ -23,15 +32,6 @@
             opacity:0;
             -webkit-overflow-scrolling: touch;
         }
-		.wordsContainer {
-			height:400px;
-			overflow-y: scroll;
-		}
-		.wordsContainer::-webkit-scrollbar{
-			width:0px;
-			opacity:0;
-			-webkit-overflow-scrolling: touch;
-		}
 		.modal {
 			width:180px;
 		}
@@ -44,23 +44,17 @@
 			padding-top:20px;
 		}
 		.card {
-            margin:20px;
+            margin:10px;
 		}
-		.card-header {
-			font-size: 16px;
-		}
-		.card-body {
-			font-size:14px;
-		}
-		#fontSizeInput, #timer,#addWordInput {
+		#fontSizeInput, #timer, #addWordInput, #fontTypeSelect{
 			background: #343a40;
 			border:1px #ffffff solid;
 			color:#fff;
 		}
 		#wordsList {
-			margin-top:10px;
+			margin-top:8px;
 			overflow-y: scroll;
-			max-height: 200px;
+			max-height: 90px;
 		}
 		#wordsList::-webkit-scrollbar-track
 		{
@@ -85,97 +79,82 @@
 			background: #343a40;
 			color:#fff;
 		}
-
 		.header {
+            z-index:100;
 			position:fixed;
 			width:100%;
-			height:30px;
+			height:20px;
 			background: transparent;
 			background-color: rgba(255,255,255,0.5);
 			padding:5px;
 		}
-		.header:hover img {
-			width:18px;
-			height:18px;
+        .closeWindowButton:hover{
+            background-image: url("./assets/img/close_1.png");
 		}
 		.closeWindowButton {
+            background-image: url("./assets/img/close_0.png");
+            background-size: cover;
+            background-repeat: no-repeat;
 			position:absolute;
 			left:5px;
 			top:5px;
-			width:15px;
-			height:15px;
+			width:10px;
+			height:10px;
 		}
+
 	</style>
 </head>
 
 <body>
 	<div class="header">
-		<img class="closeWindowButton" src="./assets/img/close.png" onclick="closeDashboard()">
+		<!--<img class="closeWindowButton" src="./assets/img/close_1.png" onclick="closeDashboard()">-->
+        <div class="closeWindowButton" onclick="closeDashboard()"></div>
 	</div>
  	<div class="settingContainer">
 		<!--改变字体大小-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-			<div class="card-header">字体大小</div>
-			<div class="card-body">
+			<div class="card-header fs1">字体大小</div>
+			<div class="card-body fs2">
 				<div class="input-group">
 					<input type="number"
 						   onkeyup="if (/(\-|\D)/g.test(this.value)) this.value = this.value.replace(/(\-|\D)/g,'')"
-						   id="fontSizeInput" class="form-control"  placeholder="添加字体大小" aria-label="change word size" aria-describedby="button-addon4">
-					<!--<div class="input-group-append" id="button-addon4">-->
-						<!--<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonAdd">+</button>-->
-						<!--<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonDel">-</button>-->
-					<!--</div>-->
+						   id="fontSizeInput" class="form-control fs3"  placeholder="添加字体大小" aria-label="change word size" aria-describedby="button-addon4">
 				</div>
 			</div>
 		</div>
 
+        <!--改变字体类型-->
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header fs1">字体类型</div>
+            <div class="card-body fs2">
+                <div class="input-group">
+                    <select class="custom-select fs3" id="fontTypeSelect">
+                    </select>
+                </div>
+            </div>
+        </div>
+
 		<!--改变刷新的时间间隔-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-			<div class="card-header">字体切换时间</div>
-			<div class="card-body">
+			<div class="card-header fs1">字体切换时间</div>
+			<div class="card-body fs2">
 				<div class="input-group">
-					<input type="number" id="timer" class="form-control" placeholder="单位为ms" aria-label="Recipient's username" aria-describedby="button-addon2">
-					<!--<div class="input-group-append" id="button-addon3">-->
-						<!--<button class="btn btn-outline-secondary" type="button" id="timerAdd">+</button>-->
-						<!--<button class="btn btn-outline-secondary" type="button" id="timerDel">-</button>-->
-					<!--</div>-->
-					<!--<div class="input-group-append" id="button-addon4">-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonAdd">+</button>-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonDel">-</button>-->
-					<!--</div>-->
+					<input type="number" id="timer" class="form-control fs3" placeholder="单位为ms" aria-label="Recipient's username" aria-describedby="button-addon2">
 				</div>
 			</div>
 		</div>
 
 		<!--words管理-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-			<div class="card-header">添加一个word</div>
-			<div class="card-body">
+			<div class="card-header fs1">添加一个word</div>
+			<div class="card-body fs2">
 				<div class="input-group">
-					<input id="addWordInput" type="text" class="form-control" placeholder="添加一个word" aria-label="Recipient's username" aria-describedby="button-addon2">
-					<!--<div class="input-group-append" id="button-addon3">-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="timerAdd">+</button>-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="timerDel">-</button>-->
-					<!--</div>-->
-					<!--<div class="input-group-append" id="button-addon4">-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonAdd">+</button>-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="changeWordSizeButtonDel">-</button>-->
-					<!--</div>-->
+					<input id="addWordInput" type="text" class="form-control fs3" placeholder="添加一个word" aria-label="Recipient's username" aria-describedby="button-addon2">
 				</div>
 				<ul class="list-group" id="wordsList">
 				</ul>
 			</div>
 		</div>
-		<!--<div class="wordsContainer">-->
-			<!--<div class="input-group mb-3">-->
-				<!--<input id="addWordInput" type="text" class="form-control" placeholder="添加一个word" aria-label="Recipient's username" aria-describedby="button-addon2">-->
-				<!--<div class="input-group-append">-->
-					<!--<button class="btn btn-outline-secondary" type="button" id="buttonForAddWord">添加</button>-->
-				<!--</div>-->
-			<!--</div>-->
-			<!--<ul class="list-group" id="wordsList">-->
-			<!--</ul>-->
-		<!--</div>-->
 
 		<!-- 删除word -->
 		<button type="button" class="btn btn-danger" id="delWordButton" onclick="showDelWordModal()">删除</button>
@@ -202,10 +181,24 @@
 	//初始化配仪表盘页面
     var words = []
     setTimeout(()=>{
-        // 设置字体大小
+        //设置字体大小
         const wordkit = getConfig()
         var fontSize = wordkit["fontSize"] ? wordkit['fontSize'] : 36
 		$("#fontSizeInput").val(fontSize)
+
+        //字体类型处理
+        //  在加载的时候应该先扫描本地已经有的字体
+        //  初始化字体列表
+        //  监听字体选择的变化，通知index.html修改字体
+        const fs = window.require('fs')
+        fs.readdirSync("./assets/font").forEach(fontName => {
+            $("#fontTypeSelect").append(`<option value="${fontName}">${fontName.substring(0,fontName.lastIndexOf("."))}</option>`)
+        })
+        var fontType = wordkit.font || ''
+        $("#fontTypeSelect").val(fontType)
+        $("#fontTypeSelect").change(function () {
+            changeFontType($("#fontTypeSelect").val())
+        })
 
 		//设置刷新间隔
         var timer = wordkit["timer"] ? wordkit['timer'] : 3000
@@ -215,7 +208,7 @@
 		let w = wordkit["word"]
         words = w ? w : [""]
 		words.forEach(v => {
-		    $("#wordsList").append(`<li class="list-group-item" contenteditable="true">${v}</li>`)
+		    $("#wordsList").append(`<li class="list-group-item fs3" contenteditable="true">${v}</li>`)
 		})
     },500)
 	//监听列表字体的编辑变化
@@ -259,7 +252,6 @@
 		}
     });
 
-
 	//监听字体大小变化
 	$('#changeWordSizeButtonAdd').click(() => {
 	    const val = parseInt($("#fontSizeInput").val())
@@ -287,6 +279,12 @@
             sendMsgBetweenRender(eventList.CHANGE_FONT_SIZE,ans)
 		}
 	})
+
+    //监听字体类型的变化
+    function changeFontType(fontType) {
+        setConfig('font',fontType)
+        sendMsgBetweenRender(eventList.SELECT_FONT_TYPE, fontType)
+    }
 
 	//监听刷新时间间隔变化
 	$("#timerAdd").click(()=>{
@@ -378,5 +376,6 @@
     function closeDashboard() {
         window.close()
 	}
+
 </script>
 </html>

@@ -33,14 +33,16 @@ if (fs.existsSync(wordsFilePath)) {
 ipcRenderer.on(eventList.CHANGE_FONT, (event, fontPath) => {
     //复制字体
     let fontFileName = fontPath.substring(fontPath.lastIndexOf('\\') + 1)
-
     fs.copyFileSync(fontPath, path.join(__dirname, 'assets/font/' + fontFileName))
-
     //change font face
     changefont(fontFileName)
-
     fonttype = fontFileName
+})
 
+ipcRenderer.on(eventList.SELECT_FONT_TYPE, (event, fontFileName) => {
+    //change font face
+    changefont(fontFileName)
+    fonttype = fontFileName
 })
 
 ipcRenderer.on(eventList.ADD_WORD_FROM_MAIN, (event, msg) => {
