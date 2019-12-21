@@ -363,6 +363,7 @@
 		    words.unshift(word)
 			setConfig('word',words)
             $("#wordsList").prepend(`<li class="list-group-item">${word}</li>`)
+            sendMsgBetweenRender(eventList.ADD_WORD_FROM_MAIN, word)
 		}
 	}
 	$("#addWordInput").keyup(function(e){

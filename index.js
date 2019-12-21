@@ -44,8 +44,7 @@ ipcRenderer.on(eventList.CHANGE_FONT, (event, fontPath) => {
 })
 
 ipcRenderer.on(eventList.ADD_WORD_FROM_MAIN, (event, msg) => {
-    words.push(msg);
-    setConfig('word',words)
+    words.unshift(msg)
 })
 
 ipcRenderer.on(eventList.SAVE_WORD_BEFORE_EXIT, (event, msg) => {
@@ -56,7 +55,7 @@ ipcRenderer.on(eventList.SAVE_WORD_BEFORE_EXIT, (event, msg) => {
         fontSize:wordkit.fontSize,
         timer:wordkit.timer
     }))
-    ipcRenderer.send('save word done','')
+    ipcRenderer.send(eventList.SAVE_WORD_DONE,'')
 })
 
 ipcRenderer.on(eventList.CHANGE_FONT_SIZE,  (event, msg) => {

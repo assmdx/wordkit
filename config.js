@@ -6,6 +6,7 @@ let eventList = {
     CHANGE_TIMER:"Change Timer",
     DEL_WORD:"Del Word",
     ADD_WORD:"add word",
+    SAVE_WORD_DONE:"save word done",
 
 }
 

@@ -11,8 +11,6 @@ wordkit：记录那些让自己刻骨铭心的话，并显示在桌面上，来�
 ├── icon.ico          //图标
 ├── index.html        //程序主界面
 ├── index.js          //控制显示word的js
-├── addWord.html      //添加句子界面
-├── addWord.js        //控制添加句子的js
 ├── dashboard.html    //仪表盘界面
 ├── config.js         //进程间传递消息的配置文件
 ├── util.js           //工具函数

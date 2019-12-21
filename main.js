@@ -1,5 +1,6 @@
 const {app, Menu, BrowserWindow, Tray, globalShortcut, dialog, ipcMain } = require('electron')
 const path = require('path')
+const {eventList} = require("./config")
 
 // 主窗口进程
 var mainWindow = null
@@ -23,36 +24,14 @@ function createWindow() {
     mainWindow = win
 
     // 阻止被最小化
-    const {DisableElectronWindowHiddenByWindowsD} = require('./disableWindowMinisize')
-    DisableElectronWindowHiddenByWindowsD(win)
-}
-
-//添加键盘快捷键
-function addKeyBind() {
-    globalShortcut.register('ctrl+k+0', function () {
-        let addWordWin = new BrowserWindow({
-            width: 1200,
-            height: 120,
-            alwaysOnTop: true,
-            frame: false,
-            transparent: true,
-            resizable: false,
-            movable: false
-        })
-        addWordWin.setIgnoreMouseEvents(false)
-        addWordWin.loadFile('addWord.html')
-        //addWordWin.openDevTools()
-        addWordWin.addListener('closeThisWindow', () => {
-            addWordWin.close()
-        })
-    })
+    // const {DisableElectronWindowHiddenByWindowsD} = require('./disableWindowMinisize')
+    // DisableElectronWindowHiddenByWindowsD(win)
 }
 
 let tray
 app.on('ready', function () {
     screen = (require('electron')).screen
     createWindow();
-    addKeyBind();
     tray = new Tray(path.join(__dirname, 'icon.ico'))
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -120,7 +99,7 @@ app.on('ready', function () {
         {
             label: '退出',
             click: function () {
-                mainWindow.webContents.send('save word before exit',  '')
+                mainWindow.webContents.send(eventList.SAVE_WORD_BEFORE_EXIT,  '')
             }
         }
     ])
@@ -136,18 +115,13 @@ app.setLoginItemSettings({
     path: app.getPath('exe')
 })
 
-//添加新的词中转消息
-ipcMain.on('add word', (event, msg) => {
-    mainWindow.webContents.send('add word from main',  msg)
-})
-
 //word列表保存成功，关闭程序
-ipcMain.on('save word done', (event, msg) => {
+ipcMain.on(eventList.SAVE_WORD_DONE, (event, msg) => {
     app.quit();
 })
 
 //负责不同子进程之间的通信中转
-ipcMain.on('msgBetweenRender',(ebent, msg) => {
+ipcMain.on('msgBetweenRender',(event, msg) => {
     const {EVENT_TYPE,MSG} = msg
     mainWindow.webContents.send(EVENT_TYPE, MSG)
 })
