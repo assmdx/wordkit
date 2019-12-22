@@ -54,7 +54,7 @@
 		#wordsList {
 			margin-top:8px;
 			overflow-y: scroll;
-			max-height: 90px;
+			/*max-height: 90px;*/
 		}
 		#wordsList::-webkit-scrollbar-track
 		{
@@ -113,7 +113,7 @@
  	<div class="settingContainer">
 		<!--改变字体大小-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-			<div class="card-header fs1">字体大小</div>
+			<div class="card-header fs1">文字大小</div>
 			<div class="card-body fs2">
 				<div class="input-group">
 					<input type="number"
@@ -125,7 +125,7 @@
 
         <!--改变字体类型-->
         <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-            <div class="card-header fs1">字体类型</div>
+            <div class="card-header fs1">文字字体类型</div>
             <div class="card-body fs2">
                 <div class="input-group">
                     <select class="custom-select fs3" id="fontTypeSelect">
@@ -136,7 +136,7 @@
 
 		<!--改变刷新的时间间隔-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-			<div class="card-header fs1">字体切换时间</div>
+			<div class="card-header fs1">文字切换时间</div>
 			<div class="card-body fs2">
 				<div class="input-group">
 					<input type="number" id="timer" class="form-control fs3" placeholder="单位为ms" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -146,10 +146,10 @@
 
 		<!--words管理-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
-			<div class="card-header fs1">添加一个word</div>
+			<div class="card-header fs1">需要铭记的话</div>
 			<div class="card-body fs2">
 				<div class="input-group">
-					<input id="addWordInput" type="text" class="form-control fs3" placeholder="添加一个word" aria-label="Recipient's username" aria-describedby="button-addon2">
+					<input id="addWordInput" type="text" class="form-control fs3" placeholder="添加一句话" aria-label="Recipient's username" aria-describedby="button-addon2">
 				</div>
 				<ul class="list-group" id="wordsList">
 				</ul>

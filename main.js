@@ -9,6 +9,7 @@ const isDebug = process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1
 
 function createWindow() {
     let win = new BrowserWindow({
+        icon:"./logo_2.png",
         width: 800,
         height: 200,
         frame: false,
@@ -28,16 +29,18 @@ function createWindow() {
     // DisableElectronWindowHiddenByWindowsD(win)
 }
 
+
 let tray
 app.on('ready', function () {
     screen = (require('electron')).screen
     createWindow();
-    tray = new Tray(path.join(__dirname, 'icon.ico'))
+    tray = new Tray(path.join(__dirname, 'logo_2.png'))
     const contextMenu = Menu.buildFromTemplate([
         {
             label: '导入字体',
             click: function () {
-                dialog.showOpenDialog({
+                dialog.showOpenDialog(mainWindow,{
+                    icon:'./logo_2.png',
                     title: '导入字体',
                     filters: [{name: 'Custom File Type', extensions: ['ttf']}]
                 }, function (files) {
@@ -52,6 +55,7 @@ app.on('ready', function () {
             click:() => {
                 const {resolve} = path;
                 let dashboard = new BrowserWindow({
+                    icon:'./logo_2.png',
                     x:screen.getPrimaryDisplay().workAreaSize.width -350,
                     y:50,
                     width: 300,
@@ -61,7 +65,7 @@ app.on('ready', function () {
                     transparent: false,
                     resizable: true,
                     movable: true,
-                    show: false
+                    show: false,
                 })
                 dashboard.once('ready-to-show', () => {
                     dashboard.show()
@@ -75,28 +79,6 @@ app.on('ready', function () {
             }
         },
         {
-            label: '登录',
-            click: function () {
-                let loginWindow = new BrowserWindow({
-                    x:screen.getPrimaryDisplay().workAreaSize.width/2 - 400,
-                    y:screen.getPrimaryDisplay().workAreaSize.height/2 - 300,
-                    width: 800,
-                    height: 600,
-                    alwaysOnTop: false,
-                    frame: false,
-                    // transparent: false,
-                    resizable: false,
-                    movable: true,
-                    show: false
-                })
-                loginWindow.once('ready-to-show', () => {
-                    loginWindow.show()
-                })
-                const {resolve} = path;
-                loginWindow.loadFile( resolve(__dirname, './login.html'))
-            }
-        },
-        {
             label: '退出',
             click: function () {
                 mainWindow.webContents.send(eventList.SAVE_WORD_BEFORE_EXIT,  '')
@@ -105,8 +87,6 @@ app.on('ready', function () {
     ])
     tray.setToolTip('wordkit')
     tray.setContextMenu(contextMenu)
-
-
 })
 
 //设置开机自动启动
