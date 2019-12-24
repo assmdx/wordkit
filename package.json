@@ -6,9 +6,7 @@
   "scripts": {
     "test": "electron .",
     "start": "electron . isDebug=true",
-    "build_exe": "electron-packager . --overwrite",
-    "build": "rm -rf dist/* && electron-builder --win --ia32",
-    "dist": "electron-builder --win --x64"
+    "build": "rm -rf dist/* && electron-builder --win --ia32"
   },
   "repository": {
     "type": "git",
@@ -22,32 +20,16 @@
   "homepage": "https://github.com/assmdx/wordkit#readme",
   "dependencies": {},
   "devDependencies": {
-    "cz-conventional-changelog": "^3.0.2",
-    "electron": "^2.0.8",
-    "electron-builder": "^20.27.1",
-    "electron-packager": "^12.1.0",
-    "electron-rebuild": "^1.8.8",
-    "husky": "^3.1.0"
+    "electron": "^2.0.8"
   },
   "build": {
     "appId": "com.assmdx.wordkit",
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ]
-    },
     "win": {
       "icon": "./icon.png",
       "target": [
         "nsis",
         "zip"
       ]
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }

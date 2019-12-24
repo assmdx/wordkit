@@ -25,13 +25,13 @@ wordkit：记录那些让自己刻骨铭心的话，并显示在桌面上，来�
 ## 克隆代码,安装依赖
 
     git clone https://github.com/assmdx/wordkit
-    npm i
+    npm i --no-package-lock
 
 ## 开发，调试
 
-    npm start
+    npm run start
 
 ## 打包
-
-    npm build
-
+    npm i -g electron-builder@20.27.1
+    npm run build
+    
