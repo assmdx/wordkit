@@ -1,4 +1,4 @@
-const {app, Menu, BrowserWindow, Tray, globalShortcut, dialog, ipcMain } = require('electron')
+const {app, Menu, BrowserWindow, Tray, dialog, ipcMain } = require('electron')
 const path = require('path')
 const {eventList} = require("./config")
 
@@ -6,6 +6,7 @@ const {eventList} = require("./config")
 var mainWindow = null
 var screen = null
 const isDebug = process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1] === "true"
+
 
 function createWindow() {
     let win = new BrowserWindow({
@@ -23,18 +24,14 @@ function createWindow() {
     isDebug && win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
     mainWindow = win
-
-    // 阻止被最小化
-    // const {DisableElectronWindowHiddenByWindowsD} = require('./disableWindowMinisize')
-    // DisableElectronWindowHiddenByWindowsD(win)
 }
-
 
 let tray
 app.on('ready', function () {
     screen = (require('electron')).screen
     createWindow();
     tray = new Tray(path.join(__dirname, 'logo_2.png'))
+
     const contextMenu = Menu.buildFromTemplate([
         {
             label: '导入字体',
@@ -89,7 +86,7 @@ app.on('ready', function () {
     tray.setContextMenu(contextMenu)
 })
 
-//设置开机自动启动
+//开机自动启动
 app.setLoginItemSettings({
     openAtLogin: true,
     path: app.getPath('exe')

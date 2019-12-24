@@ -1,13 +1,13 @@
 {
   "name": "wordkit",
   "version": "1.0.0",
-  "description": "随机在屏幕上打一行字",
+  "description": "铭",
   "main": "main.js",
   "scripts": {
     "test": "electron .",
     "start": "electron . isDebug=true",
     "build_exe": "electron-packager . --overwrite",
-    "build": "electron-builder --win --ia32",
+    "build": "rm -rf dist/* && electron-builder --win --ia32",
     "dist": "electron-builder --win --x64"
   },
   "repository": {
@@ -20,9 +20,7 @@
     "url": "https://github.com/assmdx/wordkit/issues"
   },
   "homepage": "https://github.com/assmdx/wordkit#readme",
-  "dependencies": {
-    "ffi": "^2.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "cz-conventional-changelog": "^3.0.2",
     "electron": "^2.0.8",
@@ -40,6 +38,7 @@
       ]
     },
     "win": {
+      "icon": "./icon.png",
       "target": [
         "nsis",
         "zip"
