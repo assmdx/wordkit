@@ -191,7 +191,8 @@
         //  初始化字体列表
         //  监听字体选择的变化，通知index.html修改字体
         const fs = window.require('fs')
-        fs.readdirSync("./assets/font").forEach(fontName => {
+		const path = window.require('path')
+        fs.readdirSync(path.join(__dirname, "./assets/font")).forEach(fontName => {
             $("#fontTypeSelect").append(`<option value="${fontName}">${fontName.substring(0,fontName.lastIndexOf("."))}</option>`)
         })
         var fontType = wordkit.font || ''
@@ -360,7 +361,7 @@
 		if(words.findIndex(v => v === word) === -1) {
 		    words.unshift(word)
 			setConfig('word',words)
-            $("#wordsList").prepend(`<li class="list-group-item">${word}</li>`)
+            $("#wordsList").prepend(`<li class="list-group-item fs3">${word}</li>`)
             sendMsgBetweenRender(eventList.ADD_WORD_FROM_MAIN, word)
 		}
 	}
