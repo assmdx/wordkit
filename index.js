@@ -49,6 +49,11 @@ ipcRenderer.on(eventList.ADD_WORD_FROM_MAIN, (event, msg) => {
     words.unshift(msg)
 })
 
+ipcRenderer.on(eventList.WORD_HAS_UPDATE, (event, newWords) => {
+    const str = JSON.stringify(newWords)
+    words = JSON.parse(str)
+})
+
 ipcRenderer.on(eventList.SAVE_WORD_BEFORE_EXIT, (event, msg) => {
     let wordkit = getConfig()
     fs.writeFileSync(wordsFilePath, JSON.stringify({

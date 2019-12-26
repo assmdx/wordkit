@@ -8,7 +8,7 @@ let eventList = {
     DEL_WORD:"Del Word",
     ADD_WORD:"add word",
     SAVE_WORD_DONE:"save word done",
-
+    WORD_HAS_UPDATE:"word has update",
 }
 
 

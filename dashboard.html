@@ -212,46 +212,6 @@
 		    $("#wordsList").append(`<li class="list-group-item fs3" contenteditable="true">${v}</li>`)
 		})
     },500)
-	//监听列表字体的编辑变化
-	function updateWordsByListContent() {
-		let newWordArr = []
-		$(".list-group-item").map((index,v) => {
-		    newWordArr.push(v.innerHTML)
-		})
-		setConfig("word", newWordArr)
-	}
-    var canUpdate = true
-	var unflush = 0
-    $('body').on('focus', '[contenteditable]', function() {
-        const $this = $(this)
-        $this.data('before', $this.html())
-    }).on('blur keyup paste input', '[contenteditable]', function() {
-        const $this = $(this);
-        if ($this.data('before') !== $this.html()) {
-            $this.data('before', $this.html())
-            $this.trigger('change')
-        }
-		if(canUpdate) {
-			updateWordsByListContent()
-            canUpdate = false
-            setTimeout(()=>{
-                if (unflush > 0) {
-                    updateWordsByListContent()
-                    canUpdate = true
-                    unflush = 0
-                }
-            },1000)
-		} else {
-            unflush++
-            setTimeout(()=>{
-                if (unflush > 0) {
-                    updateWordsByListContent()
-                    canUpdate = true
-                    unflush = 0
-				}
-			},1000)
-		}
-    });
 
 	//监听字体大小变化
 	$('#changeWordSizeButtonAdd').click(() => {
@@ -356,7 +316,6 @@
     $('body').click(function() {
         $("#delWordButton").css({'display':'none'})
 	});
-
 	function addwordInDashboard(word) {
 		if(words.findIndex(v => v === word) === -1) {
 		    words.unshift(word)
@@ -372,6 +331,47 @@
             $("#addWordInput").val("")
         }
 	})
+    //监听列表字体的编辑变化
+    function updateWordsByListContent() {
+        let newWordArr = []
+        $(".list-group-item").map((index,v) => {
+            newWordArr.push(v.innerHTML)
+        })
+        setConfig("word", newWordArr)
+		sendMsgBetweenRender(eventList.WORD_HAS_UPDATE, newWordArr)
+    }
+    var canUpdate = true
+    var unflush = 0
+    $('body').on('focus', '[contenteditable]', function() {
+        const $this = $(this)
+        $this.data('before', $this.html())
+    }).on('blur keyup paste input', '[contenteditable]', function() {
+        const $this = $(this);
+        if ($this.data('before') !== $this.html()) {
+            $this.data('before', $this.html())
+            $this.trigger('change')
+        }
+        if(canUpdate) {
+            updateWordsByListContent()
+            canUpdate = false
+            setTimeout(()=>{
+                if (unflush > 0) {
+                    updateWordsByListContent()
+                    canUpdate = true
+                    unflush = 0
+                }
+            },1000)
+        } else {
+            unflush++
+            setTimeout(()=>{
+                if (unflush > 0) {
+                    updateWordsByListContent()
+                    canUpdate = true
+                    unflush = 0
+                }
+            },1000)
+        }
+    });
 
 	//关闭dashboard面板
     function closeDashboard() {
