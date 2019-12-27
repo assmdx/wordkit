@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>仪表盘</title>
+	<title>铭</title>
 	<link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css">
 	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script src="./assets/js/jquery-3.4.1.min.js"></script>
@@ -79,37 +79,10 @@
 			background: #343a40;
 			color:#fff;
 		}
-		.header {
-            z-index:100;
-			position:fixed;
-			width:100%;
-			height:20px;
-			background: transparent;
-			background-color: rgba(255,255,255,0.5);
-			padding:5px;
-		}
-        .closeWindowButton:hover{
-            background-image: url("./assets/img/close_1.png");
-		}
-		.closeWindowButton {
-            background-image: url("./assets/img/close_0.png");
-            background-size: cover;
-            background-repeat: no-repeat;
-			position:absolute;
-			left:5px;
-			top:5px;
-			width:10px;
-			height:10px;
-		}
-
 	</style>
 </head>
 
 <body>
-	<div class="header">
-		<!--<img class="closeWindowButton" src="./assets/img/close_1.png" onclick="closeDashboard()">-->
-        <div class="closeWindowButton" onclick="closeDashboard()"></div>
-	</div>
  	<div class="settingContainer">
 		<!--改变字体大小-->
 		<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
@@ -373,10 +346,10 @@
         }
     });
 
-	//关闭dashboard面板
-    function closeDashboard() {
-        window.close()
-	}
+	// //关闭dashboard面板
+    // function closeDashboard() {
+     //    window.close()
+	// }
 
 </script>
 </html>

@@ -52,17 +52,20 @@ app.on('ready', function () {
             click:() => {
                 const {resolve} = path;
                 let dashboard = new BrowserWindow({
-                    icon:'./logo_2.png',
-                    x:screen.getPrimaryDisplay().workAreaSize.width -350,
-                    y:50,
+                    icon: './logo_2.png',
+                    x: screen.getPrimaryDisplay().workAreaSize.width -350,
+                    y: 50,
                     width: 300,
-                    height: 700,
+                    height: 800,
                     alwaysOnTop: false,
-                    frame: false,
+                    frame: true,
                     transparent: false,
                     resizable: true,
                     movable: true,
                     show: false,
+                    minimizable: false,
+                    maximizable: false,
+                    autoHideMenuBar: true,
                 })
                 dashboard.once('ready-to-show', () => {
                     dashboard.show()
