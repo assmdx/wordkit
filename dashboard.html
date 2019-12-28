@@ -266,7 +266,8 @@
             targetToDel = this
 			const x = e.pageX
 			const y = e.pageY
-			$("#delWordButton").css({'display':"block",'left':`${x}px`, 'top':`${y}px`})
+			console.log(x, y, window.scrollY)
+			$("#delWordButton").css({'display':"block",'left':`${x}px`, 'top':`${Math.floor(y - window.scrollY - 20)}px`})
 		}
 	})
 	function showDelWordModal() {
