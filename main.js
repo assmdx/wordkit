@@ -4,6 +4,7 @@ const {eventList} = require("./config")
 
 // 主窗口进程
 var mainWindow = null
+var dashboardWindow = null
 var screen = null
 const isDebug = process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1] === "true"
 
@@ -24,6 +25,39 @@ function createWindow() {
     isDebug && win.openDevTools()
     win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
     mainWindow = win
+}
+
+function createDashboardWindow() {
+    if(dashboardWindow && !dashboardWindow.isDestroyed()) {
+        dashboardWindow.close()
+    }
+
+    const {resolve} = path;
+    dashboardWindow = new BrowserWindow({
+        icon: './logo_2.png',
+        x: screen.getPrimaryDisplay().workAreaSize.width -350,
+        y: 50,
+        width: 300,
+        height: 800,
+        alwaysOnTop: false,
+        frame: true,
+        transparent: false,
+        resizable: true,
+        movable: true,
+        show: false,
+        minimizable: true,
+        maximizable: false,
+        autoHideMenuBar: true,
+    })
+    dashboardWindow.once('ready-to-show', () => {
+        dashboardWindow.show()
+    })
+    isDebug && dashboardWindow.openDevTools()
+    dashboardWindow.setIgnoreMouseEvents(false)
+    dashboardWindow.loadFile( resolve(__dirname, './dashboard.html'))
+    dashboardWindow.addListener('closeThisWindow', () => {
+        dashboardWindow.close()
+    })
 }
 
 let tray
@@ -49,34 +83,7 @@ app.on('ready', function () {
         },
         {
             label:'仪表盘',
-            click:() => {
-                const {resolve} = path;
-                let dashboard = new BrowserWindow({
-                    icon: './logo_2.png',
-                    x: screen.getPrimaryDisplay().workAreaSize.width -350,
-                    y: 50,
-                    width: 300,
-                    height: 800,
-                    alwaysOnTop: false,
-                    frame: true,
-                    transparent: false,
-                    resizable: true,
-                    movable: true,
-                    show: false,
-                    minimizable: false,
-                    maximizable: false,
-                    autoHideMenuBar: true,
-                })
-                dashboard.once('ready-to-show', () => {
-                    dashboard.show()
-                })
-                isDebug && dashboard.openDevTools()
-                dashboard.setIgnoreMouseEvents(false)
-                dashboard.loadFile( resolve(__dirname, './dashboard.html'))
-                dashboard.addListener('closeThisWindow', () => {
-                    dashboard.close()
-                })
-            }
+            click:createDashboardWindow
         },
         {
             label: '退出',
@@ -87,6 +94,7 @@ app.on('ready', function () {
     ])
     tray.setToolTip('wordkit')
     tray.setContextMenu(contextMenu)
+    tray.on('double-click',createDashboardWindow)
 })
 
 //开机自动启动
