@@ -64,6 +64,7 @@ let tray
 app.on('ready', function () {
     screen = (require('electron')).screen
     createWindow();
+    createDashboardWindow();
     tray = new Tray(path.join(__dirname, 'logo_2.png'))
 
     const contextMenu = Menu.buildFromTemplate([
