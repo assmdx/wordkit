@@ -20,7 +20,7 @@
   "homepage": "https://github.com/assmdx/wordkit#readme",
   "dependencies": {},
   "devDependencies": {
-    "electron": "^2.0.8"
+    "electron": "^9.1.0"
   },
   "build": {
     "appId": "com.assmdx.wordkit",
