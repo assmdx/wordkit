@@ -7,5 +7,6 @@ dist/
 windows/
 windows-store/
 miniblink/
-
+*.msix
+.ssh/
 
