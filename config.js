@@ -1,5 +1,4 @@
 let eventList = {
-    CHANGE_FONT:"change font",//添加字体
     SELECT_FONT_TYPE:"select_font_type",
     ADD_WORD_FROM_MAIN:"add word from main",
     SAVE_WORD_BEFORE_EXIT:"save word before exit",

@@ -69,20 +69,6 @@ app.on('ready', function () {
 
     const contextMenu = Menu.buildFromTemplate([
         {
-            label: '导入字体',
-            click: function () {
-                dialog.showOpenDialog(mainWindow,{
-                    icon:'./logo_2.png',
-                    title: '导入字体',
-                    filters: [{name: 'Custom File Type', extensions: ['ttf']}]
-                }, function (files) {
-                    if (files && files.length > 0) {
-                        mainWindow.webContents.send('change font',  files[0])
-                    }
-                })
-            }
-        },
-        {
             label:'仪表盘',
             click:createDashboardWindow
         },

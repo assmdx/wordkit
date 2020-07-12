@@ -39,3 +39,10 @@
     
 ## 反馈
 [反馈地址](https://github.com/assmdx/wordkit/issues)
+
+## TODO
+
+- [ ] 加上发通知
+- [ ] 去掉桌面显示word
+- [ ] 去掉快捷键添加词
+- [ ] 代码重构优化，去掉处理显示的逻辑
