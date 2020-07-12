@@ -4,7 +4,8 @@ const {
     BrowserWindow,
     Tray,
     dialog,
-    ipcMain
+    ipcMain,
+    Notification
 } = require('electron')
 const path = require('path')
 const {
@@ -76,6 +77,9 @@ function createDashboardWindow() {
 let tray
 app.on('ready', function () {
     screen = (require('electron')).screen
+    if (process.platform === 'win32') {
+        app.setAppUserModelId(app.getName())
+    }
     createWindow();
     createDashboardWindow();
     tray = new Tray(path.join(__dirname, 'logo_2.png'))
@@ -114,4 +118,19 @@ ipcMain.on('msgBetweenRender', (event, msg) => {
         MSG
     } = msg
     mainWindow.webContents.send(EVENT_TYPE, MSG)
+})
+
+//发送桌面通知
+ipcMain.on(eventList.SEND_NOTIFICATION, (event, msg) => {
+    if (Notification.isSupported) {
+        let notification = new Notification({
+            title: '铭', // 通知的标题, 将在通知窗口的顶部显示
+            body: msg, // 通知的正文文本, 将显示在标题或副标题下面
+            icon: './logo_2.png', // 用于在该通知上显示的图标
+            silent: true, // 在显示通知时是否发出系统提示音
+        })
+        notification.show()
+    } else {
+        console.log('dont support this sytem ')
+    }
 })

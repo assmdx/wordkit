@@ -4,8 +4,9 @@ const wordsFilePath = path.join(__dirname, 'word.json')
 const {
     eventList
 } = require("./config")
-let words
-let timer
+let words = null
+let timer = null
+let freshTimer = null
 
 if (fs.existsSync(wordsFilePath)) {
     fs.readFile(wordsFilePath, (err, data) => {
@@ -13,7 +14,10 @@ if (fs.existsSync(wordsFilePath)) {
         var cachedSetting = getConfig()
         var settings = cachedSetting ? cachedSetting : JSON.parse(data)
         words = settings.word
-        timer = settings["timer"] ? settings["timer"] : 3000
+        timer = settings["timer"] ? settings["timer"] : 3
+
+        //设置时钟让word切换展示
+        freshTimer = setTimer(timer)
 
         //初始化本地数据缓存
         setConfig(undefined, settings)
@@ -38,10 +42,22 @@ ipcRenderer.on(eventList.SAVE_WORD_BEFORE_EXIT, (event, msg) => {
     ipcRenderer.send(eventList.SAVE_WORD_DONE, '')
 })
 
-ipcRenderer.on(eventList.CHANGE_TIMER, (event, msg) => {
-    timer = msg
+ipcRenderer.on(eventList.CHANGE_TIMER, (event, newTimer) => {
+    clearInterval(freshTimer)
+    timer = newTimer
+    freshTimer = setTimer(timer)
 })
 
 ipcRenderer.on(eventList.DEL_WORD, (event, msg) => {
     words = getConfig('word')
+    clearInterval(freshTimer)
+    freshTimer = setTimer(timer)
 })
+
+function setTimer(t) {
+    return setInterval(function () {
+        let lenOfWords = words.length
+        let randomIndex = Math.floor(Math.random() * lenOfWords)
+        ipcRenderer.send(eventList.SEND_NOTIFICATION, words[randomIndex])
+    }, t * 60 * 1000)
+}
