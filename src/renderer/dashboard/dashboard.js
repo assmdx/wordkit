@@ -1,6 +1,6 @@
 const {
   eventList
-} = require("./config")
+} = require("../../config")
 
 //初始化配仪表盘页面
 var words = []

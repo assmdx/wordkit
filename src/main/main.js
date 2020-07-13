@@ -36,7 +36,7 @@ function createWindow() {
   });
   //win.setIgnoreMouseEvents(isDebug ? false : true)
   !isDebug && win.setIgnoreMouseEvents(true);
-  win.loadFile(resolve(__dirname, "../../index.html"));
+  win.loadFile(resolve(__dirname, "../renderer/index/index.html"));
   isDebug && win.openDevTools();
   win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
   mainWindow = win;
@@ -68,7 +68,7 @@ function createDashboardWindow() {
   });
   isDebug && dashboardWindow.openDevTools();
   dashboardWindow.setIgnoreMouseEvents(false);
-  dashboardWindow.loadFile(resolve(__dirname, "../../dashboard.html"));
+  dashboardWindow.loadFile(resolve(__dirname, "../renderer/dashboard/dashboard.html"));
   dashboardWindow.addListener("closeThisWindow", () => {
     dashboardWindow.close();
   });
