@@ -31,7 +31,7 @@
 │   │   │   ├── index.html
 │   │   │   └── index.js
 │   ├── utils
-└───────└── index.js
+│   │   └── index.js
 ├── dist
 ├── resources
 ├── policy
