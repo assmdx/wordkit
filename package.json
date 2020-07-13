@@ -2,7 +2,7 @@
   "name": "wordkit",
   "version": "1.0.0",
   "description": "铭",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "scripts": {
     "test": "electron .",
     "start": "electron . isDebug=true",
