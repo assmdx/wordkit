@@ -9,18 +9,38 @@
 # 目录结构
 
 ```
-./
-├── icon.ico          //图标
-├── index.html        //程序主界面
-├── index.js          //控制显示word的js
-├── dashboard.html    //仪表盘界面
-├── config.js         //进程间传递消息的配置文件
-├── util.js           //工具函数
-├── LICENSE           // 发布协议
-├── main.js           // electron控制程序界面显示的js
-├── package.json      //依赖信息
-├── README.md         //描述文档
-└── word.json         //存word的文件
+├── src
+│   ├── assets
+│   │   ├── css
+│   │   │   ├── **/*.css
+│   │   ├── js
+│   │   │   ├── **/*.js
+│   │   ├── img
+│   │   │   └── **/*.png
+│   ├── config
+│   │   └── index.js
+│   ├── datastore
+│   │   └── word.json
+│   ├── main
+│   │   └── main.js
+│   ├── renderer
+│   │   ├── dashboard
+│   │   │   ├── dashboard.html
+│   │   │   └── dashboard.js
+│   │   ├── index
+│   │   │   ├── index.html
+│   │   │   └── index.js
+│   ├── utils
+└───────└── index.js
+├── dist
+├── resources
+├── policy
+│   └── index.html
+├── .gitconfig
+├── .gitignore
+├── README.md
+├── package.json
+└── LICENSE
 ```
 
 # 运行
