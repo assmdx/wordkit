@@ -100,6 +100,15 @@
       color: #fff;
     }
   </style>
+
+  <script src="../../utils/mpaas.js"></script>
+  <script>
+    init()
+  </script>
+  <script src="../../assets/js/mpaas.min.js"></script>
+  <script>
+    initTracker()
+  </script>
 </head>
 
 <body>
@@ -149,5 +158,10 @@
 <script src="../../assets/js/bootstrap.min.js" defer></script>
 <script src="../../utils/index.js"></script>
 <script src="./dashboard.js"></script>
+<script>
+  window.onload = function () {
+    collect('wordkit_open_dashboard')
+  }
+</script>
 
 </html>

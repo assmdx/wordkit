@@ -26,6 +26,7 @@ $("#timerAdd").click(() => {
   $("#timer").val(ans)
   setConfig('timer', ans)
   sendMsgBetweenRender(eventList.CHANGE_TIMER, ans)
+  collect('wordkit_change_timer')
 })
 $("#timerDel").click(() => {
   const val = parseInt($("#timer").val())
@@ -33,6 +34,7 @@ $("#timerDel").click(() => {
   $("#timer").val(ans)
   setConfig('timer', ans)
   sendMsgBetweenRender(eventList.CHANGE_TIMER, ans)
+  collect('wordkit_change_timer')
 })
 $("#timer").keyup(() => {
   let val = parseInt($("#timer").val())
@@ -41,6 +43,7 @@ $("#timer").keyup(() => {
     val = val < 1000 ? 1000 : val;
     setConfig('timer', val)
     sendMsgBetweenRender(eventList.CHANGE_TIMER, val)
+    collect('wordkit_change_timer')
   }
 })
 
@@ -90,7 +93,7 @@ function delWord() {
   setConfig('word', words)
   setTimeout(() => {
     sendMsgBetweenRender(eventList.DEL_WORD)
-
+    collect('wordkit_delete_word')
   }, 50)
   $('#delWordModal').modal('hide')
 }
@@ -106,6 +109,7 @@ function addwordInDashboard(word) {
     setConfig('word', words)
     $("#wordsList").prepend(`<li class="list-group-item fs3">${word}</li>`)
     sendMsgBetweenRender(eventList.ADD_WORD_FROM_MAIN, word)
+    collect('wordkit_add_word')
   }
 }
 $("#addWordInput").keyup(function (e) {
@@ -122,6 +126,7 @@ function updateWordsByListContent() {
   })
   setConfig("word", newWordArr)
   sendMsgBetweenRender(eventList.WORD_HAS_UPDATE, newWordArr)
+  collect('wordkit_change_word')
 }
 var lastUpdateTime = +new Date()
 var timer = null
@@ -150,3 +155,8 @@ $('body').on('focus', '[contenteditable]', function () {
     timer = setTimeout(updateWordsByListContent, 1000 - remaining)
   }
 });
+
+
+window.onbeforeunload = function () {
+  collect('wordkit_close_dashboard')
+}

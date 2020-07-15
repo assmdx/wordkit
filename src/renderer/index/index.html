@@ -13,6 +13,14 @@
   <script>
     if (window.module) module = window.module;
   </script>
+  <script src="../../utils/mpaas.js"></script>
+  <script>
+    init()
+  </script>
+  <script src="../../assets/js/mpaas.min.js"></script>
+  <script>
+    initTracker()
+  </script>
 </head>
 
 <body>
@@ -22,6 +30,9 @@
 <script src="./index.js"></script>
 <script>
   const wordkit = getConfig()
+  window.onload = function () {
+    collect('wordkit_startup');
+  }
 </script>
 
 </html>
