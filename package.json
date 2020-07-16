@@ -6,7 +6,9 @@
   "scripts": {
     "test": "electron .",
     "start": "electron . isDebug=true",
-    "build": "rm -rf dist/* && electron-builder --win --ia32"
+    "build:windows": "rm -rf dist/* && electron-builder --win --x64",
+    "build:mac": "rm -rf dist/* && electron-builder --mac --x64",
+    "build:linux": "rm -rf dist/* && electron-builder --linux --x64"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,9 @@
     "url": "https://github.com/assmdx/wordkit/issues"
   },
   "homepage": "https://github.com/assmdx/wordkit#readme",
-  "dependencies": {},
+  "dependencies": {
+    "macaddress": "^0.5.1"
+  },
   "devDependencies": {
     "electron": "^2.0.8"
   },
@@ -28,6 +32,20 @@
       "icon": "./icon.png",
       "target": [
         "nsis",
+        "zip"
+      ]
+    },
+    "mac": {
+      "icon": "./icon.png",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "icon": "./icon.png",
+      "target": [
+        "AppImage",
         "zip"
       ]
     }
