@@ -18,20 +18,14 @@ function getConfig(key) {
   let wordkit = null
   const wordkitFilePath = path.join(__dirname, '../datastore/word.json')
 
-  console.log(cache, key)
-
   if (cache) {
     wordkit = JSON.parse(cache)
   } else {
-    console.log(wordkitFilePath)
     if (fs.existsSync(wordkitFilePath)) {
       try {
         const wordkitStr = fs.readFileSync(wordkitFilePath)
-        console.log(wordkitStr)
         wordkit = JSON.parse(wordkitStr)
-        console.log(wordkit)
       } catch (err) {
-        console.error(err)
         // 读取文件失败，报错，程序退出
         sendMsgBetweenRender(globalConfig.eventList.RUNTIME_ERROR, {
           type: globalConfig.ERROR_TYPE.READFILE,
@@ -46,7 +40,6 @@ function getConfig(key) {
     }
   }
 
-  console.log(wordkit)
   if (key) {
     return wordkit[key]
   } else {

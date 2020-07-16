@@ -43,7 +43,6 @@ function setTimer(t) {
 
 function init() {
   const settings = getConfig()
-  console.log(settings)
   words = settings.word
   timer = settings["timer"] ? settings["timer"] : 3
 

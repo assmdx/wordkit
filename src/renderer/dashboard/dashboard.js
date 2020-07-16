@@ -5,7 +5,6 @@ const {getConfig, setConfig, sendMsgBetweenRender} = require('../../utils')
 var words = []
 setTimeout(() => {
   const wordkit = getConfig()
-  console.log(wordkit);
 
   //设置刷新间隔
   var timer = wordkit["timer"] ? wordkit['timer'] : 3
@@ -68,7 +67,6 @@ $("#wordsList").on('mousedown', 'li', function (e) {
     targetToDel = this
     const x = e.pageX
     const y = e.pageY
-    console.log(x, y, window.scrollY)
     $("#delWordButton").css({
       'display': "block",
       'left': `${x}px`,
