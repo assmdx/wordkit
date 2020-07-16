@@ -1,14 +1,14 @@
-const {
-  eventList
-} = require("../../config")
+const {eventList} = require("../../config")
+const {getConfig, setConfig, sendMsgBetweenRender} = require('../../utils')
 
 //初始化配仪表盘页面
 var words = []
 setTimeout(() => {
   const wordkit = getConfig()
+  console.log(wordkit);
 
   //设置刷新间隔
-  var timer = wordkit["timer"] ? wordkit['timer'] : 3000
+  var timer = wordkit["timer"] ? wordkit['timer'] : 3
   $("#timer").val(timer)
 
   //设置words列表
@@ -22,7 +22,7 @@ setTimeout(() => {
 //监听刷新时间间隔变化
 $("#timerAdd").click(() => {
   const val = parseInt($("#timer").val())
-  const ans = val + 500
+  const ans = val + 1
   $("#timer").val(ans)
   setConfig('timer', ans)
   sendMsgBetweenRender(eventList.CHANGE_TIMER, ans)
@@ -30,7 +30,7 @@ $("#timerAdd").click(() => {
 })
 $("#timerDel").click(() => {
   const val = parseInt($("#timer").val())
-  const ans = val - 500 >= 1000 ? val - 500 : 1000
+  const ans = val - 1 >= 1 ? val - 1 : 1
   $("#timer").val(ans)
   setConfig('timer', ans)
   sendMsgBetweenRender(eventList.CHANGE_TIMER, ans)
@@ -40,7 +40,7 @@ $("#timer").keyup(() => {
   let val = parseInt($("#timer").val())
   const ans = getConfig('timer')
   if (val && val !== ans) {
-    val = val < 1000 ? 1000 : val;
+    val = val < 1 ? 1 : val;
     setConfig('timer', val)
     sendMsgBetweenRender(eventList.CHANGE_TIMER, val)
     collect('wordkit_change_timer')

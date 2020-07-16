@@ -118,7 +118,12 @@ ipcMain.on("msgBetweenRender", (event, msg) => {
     EVENT_TYPE,
     MSG
   } = msg;
-  mainWindow.webContents.send(EVENT_TYPE, MSG);
+  if (EVENT_TYPE === eventList.RUNTIME_ERROR) {
+    console.error(...msg)
+    app.exit()
+  } else {
+    mainWindow.webContents.send(EVENT_TYPE, MSG);
+  }
 });
 
 //发送桌面通知
