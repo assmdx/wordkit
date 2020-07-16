@@ -23,6 +23,7 @@ var dashboardWindow = null;
 var screen = null;
 const isDebug =
   process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1] === "true";
+const isMac = process.platform === 'darwin'
 
 // 打开主窗口
 function createWindow() {
@@ -42,7 +43,7 @@ function createWindow() {
   win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
   mainWindow = win;
 
-  if (process.platform === 'darwin') {
+  if (isMac) {
     ployfillMac.ployfill();
   }
 }
@@ -88,7 +89,9 @@ app.on("ready", function () {
   }
   createWindow();
   createDashboardWindow();
-  tray = new Tray(path.join(__dirname, LOGO));
+
+  const trayLogo = isMac ? '../../icon.mac.top.18x18.png' : LOGO
+  tray = new Tray(path.join(__dirname, trayLogo));
 
   const contextMenu = Menu.buildFromTemplate([{
       label: "仪表盘",
