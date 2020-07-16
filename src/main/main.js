@@ -15,6 +15,7 @@ const {
   eventList
 } = require("../config");
 const LOGO = "../assets/img/logo_2.png";
+const ployfillMac = require('./ployfill.mac')
 
 // 主窗口进程
 var mainWindow = null;
@@ -40,6 +41,10 @@ function createWindow() {
   isDebug && win.openDevTools();
   win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
   mainWindow = win;
+
+  if (process.platform === 'darwin') {
+    ployfillMac.ployfill();
+  }
 }
 
 // 创建仪表盘函数
