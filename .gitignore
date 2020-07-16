@@ -2,7 +2,6 @@
 .vscode/
 package-lock.json
 node_modules/
-word.json
 dist/
 windows/
 windows-store/
