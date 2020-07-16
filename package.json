@@ -1,6 +1,6 @@
 {
   "name": "wordkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "铭",
   "main": "src/main/main.js",
   "scripts": {
@@ -28,6 +28,7 @@
   },
   "build": {
     "appId": "com.assmdx.wordkit",
+    "productName": "铭",
     "win": {
       "icon": "./icon.png",
       "target": [
