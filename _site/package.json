@@ -1,0 +1,54 @@
+{
+  "name": "wordkit",
+  "version": "1.0.2",
+  "description": "铭",
+  "main": "src/main/main.js",
+  "scripts": {
+    "test": "electron .",
+    "start": "electron . isDebug=true",
+    "build:windows": "rm -rf dist/* && electron-builder --win --x64",
+    "build:mac": "rm -rf dist/* && electron-builder --mac --x64",
+    "build:linux": "rm -rf dist/* && electron-builder --linux --x64"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/assmdx/wordkit.git"
+  },
+  "author": "assmdx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/assmdx/wordkit/issues"
+  },
+  "homepage": "https://github.com/assmdx/wordkit#readme",
+  "dependencies": {
+    "macaddress": "^0.5.1"
+  },
+  "devDependencies": {
+    "electron": "^2.0.8"
+  },
+  "build": {
+    "appId": "com.assmdx.wordkit",
+    "productName": "铭",
+    "win": {
+      "icon": "./icon.png",
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "mac": {
+      "icon": "./icon.512x512.png",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "linux": {
+      "icon": "./icon.png",
+      "target": [
+        "AppImage",
+        "zip"
+      ]
+    }
+  }
+}

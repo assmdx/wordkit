@@ -8,4 +8,7 @@ windows-store/
 miniblink/
 *.msix
 .ssh/
+.gem
+.jekyll-cache
+
 
