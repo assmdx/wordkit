@@ -10,5 +10,5 @@ miniblink/
 .ssh/
 .gem
 .jekyll-cache
-
+ .git-credentials
 
