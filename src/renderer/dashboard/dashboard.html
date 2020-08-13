@@ -11,10 +11,10 @@
       module = undefined;
     }
   </script>
-  <script src="../../assets/js/jquery-3.4.1.min.js"></script>
   <script>
     if (window.module) module = window.module;
   </script>
+  <script src="../../assets/js/jquery-3.4.1.min.js"></script>
   <style>
     .fs1 {
       font-size: 16px;
@@ -101,14 +101,7 @@
     }
   </style>
 
-  <script src="../../utils/mpaas.js"></script>
-  <script>
-    init()
-  </script>
-  <script src="../../assets/js/mpaas.min.js"></script>
-  <script>
-    initTracker()
-  </script>
+  
 </head>
 
 <body>
@@ -153,14 +146,11 @@
     </div>
   </div>
 </body>
-
+<script src="../../utils/mpaas.js"></script>
+<script> init(); </script>
+<script src="../../assets/js/mpaas.min.js"></script>
+<script> initTracker(); </script>
 <script src="../../assets/js/popper.min.js"></script>
 <script src="../../assets/js/bootstrap.min.js" defer></script>
 <script src="./dashboard.js"></script>
-<script>
-  window.onload = function () {
-    collect('wordkit_open_dashboard')
-  }
-</script>
-
 </html>

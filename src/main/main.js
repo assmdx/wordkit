@@ -1,52 +1,19 @@
-const {
-  app,
-  Menu,
-  BrowserWindow,
-  Tray,
-  dialog,
-  ipcMain,
-  Notification,
-} = require("electron");
+const {app, Menu, BrowserWindow, Tray, dialog, ipcMain, Notification} = require("electron");
 const path = require("path");
-const {
-  resolve
-} = path;
-const {
-  eventList
-} = require("../config");
+const {resolve} = path;
+const {eventList} = require("../config");
 const LOGO = "../assets/img/logo_2.png";
-const ployfillMac = require('./ployfill.mac')
+const ployfillMac = require('./ployfill.mac');
+const macaddress = require('macaddress');
+
 
 // 主窗口进程
-var mainWindow = null;
-var dashboardWindow = null;
-var screen = null;
-const isDebug =
-  process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1] === "true";
-const isMac = process.platform === 'darwin'
-
-// 打开主窗口
-function createWindow() {
-  let win = new BrowserWindow({
-    icon: LOGO,
-    width: 800,
-    height: 200,
-    frame: false,
-    transparent: isDebug ? false : true,
-    alwaysOnTop: false,
-    movable: false,
-  });
-  //win.setIgnoreMouseEvents(isDebug ? false : true)
-  !isDebug && win.setIgnoreMouseEvents(true);
-  win.loadFile(resolve(__dirname, "../renderer/index/index.html"));
-  isDebug && win.openDevTools();
-  win.isVisible() ? win.setSkipTaskbar(true) : win.setSkipTaskbar(false);
-  mainWindow = win;
-
-  if (isMac) {
-    ployfillMac.ployfill();
-  }
-}
+let mainWindow = null;
+let dashboardWindow = null;
+let screen = null;
+const isDebug = process.argv.length > 2 && process.argv.slice(2)[0].split("=")[1] === "true";
+const isMac = process.platform === 'darwin';
+global.macaddress = macaddress;
 
 // 创建仪表盘函数
 function createDashboardWindow() {
@@ -54,7 +21,10 @@ function createDashboardWindow() {
     dashboardWindow.close();
   }
   dashboardWindow = new BrowserWindow({
-    icon: LOGO,
+    webPreferences: {
+      nodeIntegration : true,
+    },
+    icon: resolve(__dirname, LOGO),
     x: screen.getPrimaryDisplay().workAreaSize.width - 350,
     y: 50,
     width: 300,
@@ -62,7 +32,7 @@ function createDashboardWindow() {
     alwaysOnTop: false,
     frame: true,
     transparent: false,
-    resizable: true,
+    resizable: false,
     movable: true,
     show: false,
     minimizable: true,
@@ -75,9 +45,11 @@ function createDashboardWindow() {
   isDebug && dashboardWindow.openDevTools();
   dashboardWindow.setIgnoreMouseEvents(false);
   dashboardWindow.loadFile(resolve(__dirname, "../renderer/dashboard/dashboard.html"));
-  dashboardWindow.addListener("closeThisWindow", () => {
-    dashboardWindow.close();
-  });
+  dashboardWindow.addListener("closeThisWindow", dashboardWindow.close);
+  mainWindow = dashboardWindow;
+  if (isMac) {
+    ployfillMac.ployfill();
+  }
 }
 
 // 设置右下角的右键菜单
@@ -87,7 +59,6 @@ app.on("ready", function () {
   if (process.platform === "win32") {
     app.setAppUserModelId(app.getName());
   }
-  createWindow();
   createDashboardWindow();
 
   const trayLogo = isMac ? '../../icon.mac.top.18x18.png' : LOGO
@@ -122,13 +93,10 @@ ipcMain.on(eventList.SAVE_WORD_DONE, (event, msg) => {
 
 //负责不同子进程之间的通信中转
 ipcMain.on("msgBetweenRender", (event, msg) => {
-  const {
-    EVENT_TYPE,
-    MSG
-  } = msg;
+  const {EVENT_TYPE, MSG} = msg;
   if (EVENT_TYPE === eventList.RUNTIME_ERROR) {
-    console.error(...msg)
-    app.exit()
+    console.error(...msg);
+    app.exit();
   } else {
     mainWindow.webContents.send(EVENT_TYPE, MSG);
   }
