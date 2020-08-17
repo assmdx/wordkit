@@ -32,8 +32,6 @@ function initDashboard() {
   });
   // 设置时钟让word切换展示
   freshTimer = setTimer(timer);
-  // 初始化本地数据缓存
-  flushConfig(db);
   // 挂载事件处理函数
   $("#timer").blur(timerBlur);
   // 监听word列表的点击，右键，修改，删除
@@ -79,6 +77,9 @@ function timerBlur(e) {
 }
 
 function changeTimer(newTimer) {
+  if (timer !== newTimer) {
+    flushConfig({word: words, timer});
+  }
   clearInterval(freshTimer);
   timer = newTimer;
   freshTimer = setTimer(timer);
@@ -121,6 +122,7 @@ function delWord() {
   let words = getConfig('word');
   words = words.filter(v => v !== w);
   setConfig('word', words);
+  flushConfig({word: words, timer});
   collect('wordkit_delete_word');
   $('#delWordModal').modal('hide');
 }
@@ -136,6 +138,7 @@ function addwordInDashboard(word) {
   if (words.findIndex(v => v === word) === -1) {
     words.unshift(word);
     setConfig('word', words);
+    flushConfig({word: words, timer});
     $("#wordsList").prepend(`<li class="list-group-item fs3">${word}</li>`);
     collect('wordkit_add_word');
   }
@@ -147,8 +150,9 @@ function updateWordsByListContent() {
   $(".list-group-item").map((index, v) => {
     newWordArr.push(v.innerHTML);
   });
-  setConfig("word", newWordArr);
   words = newWordArr;
+  setConfig("word", newWordArr);
+  flushConfig({word: words, timer});
   collect('wordkit_change_word');
 }
 
@@ -161,7 +165,6 @@ function setTimer(t) {
 }
 
 function saveWordsBeforeExit(event, msg) {
-  let wordkit = getConfig();
-  flushConfig({ word: words, timer: wordkit.timer});
+  flushConfig({ word: words, timer});
   ipcRenderer.send(eventList.SAVE_WORD_DONE, '');
 }

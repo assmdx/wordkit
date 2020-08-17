@@ -61,10 +61,11 @@ function setConfig(key, value) {
 
 // 将wordkit刷到磁盘上
 function flushConfig(wordkit) {
-  const wordkitFilePath = path.join(__dirname, '../datastore/word.json')
-  const d = wordkit || getConfig()
+  const wordkitFilePath = path.join(__dirname, '../datastore/word.json');
+  const d = wordkit || getConfig();
+
   if (d) {
-    fs.writeFileSync(wordkitFilePath, JSON.stringify(d))
+    fs.writeFileSync(wordkitFilePath, JSON.stringify(d));
   }
 }
 

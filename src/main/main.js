@@ -34,6 +34,7 @@ function createDashboardWindow() {
     transparent: false,
     resizable: false,
     movable: true,
+    closable: false,
     show: false,
     minimizable: true,
     maximizable: false,
