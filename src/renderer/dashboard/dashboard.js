@@ -10,7 +10,7 @@ let timer = 3;
 let lastchild = null;
 let targetToDel = null;
 let lastUpdateTime = +new Date();
-let wordInputTimer = null;
+let wordInputTimer = null;  
 
 // 初始化
 initDashboard();

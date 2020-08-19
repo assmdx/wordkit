@@ -12,3 +12,4 @@ _site
 .jekyll-cache
 .git-credentials
 .gitconfig
+word.json
