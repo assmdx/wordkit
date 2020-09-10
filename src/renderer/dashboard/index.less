@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'Siyuan';
+  font-display: swap;
+  src: url('//at.alicdn.com/t/webfont_g08nq1j0mpe.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/webfont_g08nq1j0mpe.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/webfont_g08nq1j0mpe.woff2') format('woff2'),
+  url('//at.alicdn.com/t/webfont_g08nq1j0mpe.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/webfont_g08nq1j0mpe.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/webfont_g08nq1j0mpe.svg#思源黑体-粗') format('svg'); /* iOS 4.1- */
+}
+
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+body {
+  background: rgba(196, 199, 199, 0.643);
+  border: 0;
+}
+
+input, textarea {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+  background: url('./back.jpg') top center/100% 100% no-repeat;
+  overflow: scroll;
+  scroll-behavior: smooth;
+}
+
+.notify-timer-container {
+  padding: 40px 16px 16px 16px;
+  input {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+    height: 20vw;
+    border-radius: 30px;
+    border: 0;
+    background: #ffffff;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+}
+
+.word-container {
+  padding: 24px 16px 40px 16px;
+  .word {
+    width: 100%;
+    height: 60vh;
+    display: inline-block;   
+    text-align: center;
+    vertical-align: middle;
+    border: 0;
+    border-radius: 30px;
+    font-size: 30px;
+    word-wrap: break-word;
+    font-family: Siyuan;
+    margin-bottom: 16px;
+  }
+}

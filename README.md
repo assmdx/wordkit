@@ -74,15 +74,10 @@
 - [x] 添加 linux 支持
 - [x] 发版
 - [x] 官网
-- [ ] words view
-  - [ ] 重构成react
-  - [ ] 是否开启通知的按钮
-  - [ ] 界面美化
-  - [ ] 删除交互
-  - [ ] 数据存储转为本地数据
-- [ ] word mind
-  - [ ] 应用内模型搭建
-  - [ ] behavior data 的设计
-- [ ] community data
-  - [ ] 数据交换与分发
-- [ ] community view 搭建
+- [x] 重构成react
+  - [x] 最小的demo跑起来
+  - [x] 迁移原来的代码
+  - [x] 去掉bootstrap
+  - [ ] 打包修改
+- [x] 界面美化
+- [x] 删除交互

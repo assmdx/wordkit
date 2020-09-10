@@ -13,3 +13,5 @@ _site
 .git-credentials
 .gitconfig
 word.json
+app/
+release/

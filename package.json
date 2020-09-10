@@ -2,13 +2,28 @@
   "name": "wordkit",
   "version": "1.0.2",
   "description": "铭",
-  "main": "src/main/main.js",
+  "main.backup": "src/main/main.js",
+  "main": "./app/dist/main.js",
   "scripts": {
+    "renderer-dev": "webpack-dev-server --config ./webpack/webpack.renderer.dev.config.js",
+    "main-dev": "webpack --config ./webpack/webpack.main.config.js && electron .",
+    "dev": "cross-env START_HOT=1 yarn run renderer-dev",
+    "dist": "yarn run build && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --win --x64 --publish never",
+    "install-deps": "yarn install && yarn run update:node_modules",
     "test": "electron .",
     "start": "electron . isDebug=true",
     "build:windows": "rm -rf dist/* && electron-builder --win --x64",
     "build:mac": "rm -rf dist/* && electron-builder --mac --x64",
-    "build:linux": "rm -rf dist/* && electron-builder --linux --x64"
+    "build:linux": "rm -rf dist/* && electron-builder --linux --x64",
+    "lint": "eslint ./src/**/*.ts ./src/**/*.tsx --fix",
+    "compile-main": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.main.prod.config.js",
+    "compile-renderer": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.renderer.prod.config.js",
+    "compile": "yarn run lint && yarn run compile-main && yarn run compile-renderer",
+    "clean:dist": "npx rimraf app/dist",
+    "build": "yarn clean:dist && yarn compile ",
+    "dist:win": "yarn run build && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --win --x64",
+    "dist:mac": "yarn run build && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac --x64",
+    "dist:linux": "yarn run build && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --linux --x64"
   },
   "repository": {
     "type": "git",
@@ -21,34 +36,94 @@
   },
   "homepage": "https://github.com/assmdx/wordkit#readme",
   "dependencies": {
-    "macaddress": "^0.5.1"
+    "@types/electron-is-dev": "^1.1.1",
+    "classnames": "^2.2.6",
+    "electron-store": "^5.1.0",
+    "electron-window-state": "^5.0.3",
+    "exit-hook": "^2.2.0",
+    "file-loader": "^6.0.0",
+    "lodash": "^4.17.15",
+    "macaddress": "^0.5.1",
+    "npx": "^10.2.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "reset-css": "^5.0.1",
+    "rimraf": "^3.0.2",
+    "source-map-support": "^0.5.12"
   },
   "devDependencies": {
-    "electron": "^2.0.8"
+    "@babel/core": "^7.8.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.0",
+    "@babel/polyfill": "^7.8.0",
+    "@babel/preset-env": "^7.8.2",
+    "@babel/preset-react": "^7.8.0",
+    "@babel/preset-typescript": "^7.8.0",
+    "@hot-loader/react-dom": "^16.11.0",
+    "@types/classnames": "^2.2.9",
+    "@types/lodash": "^4.14.149",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "add-asset-webpack-plugin": "^1.0.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-import": "^1.13.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "cross-env": "^6.0.3",
+    "css-loader": "^3.4.2",
+    "electron": "9.0.5",
+    "electron-builder": "^22.2.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "prettier": "^1.19.1",
+    "raw-loader": "^4.0.0",
+    "react-hot-loader": "^4.12.18",
+    "style-loader": "^1.0.2",
+    "typescript": "^3.7.3",
+    "url-loader": "^3.0.0",
+    "webpack": "^4.41.5",
+    "webpack-build-notifier": "^2.0.0",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-merge": "^4.2.2"
   },
   "build": {
     "appId": "com.assmdx.wordkit",
     "productName": "铭",
     "win": {
-      "icon": "./icon.png",
+      "icon": "./src/icon/icon.png",
       "target": [
         "nsis",
         "zip"
       ]
     },
     "mac": {
-      "icon": "./icon.512x512.png",
+      "icon": "./src/icon/icon.512x512.png",
       "target": [
         "dmg",
         "zip"
       ]
     },
     "linux": {
-      "icon": "./icon.png",
+      "icon": "./src/icon/icon.png",
       "target": [
         "AppImage",
         "zip"
       ]
+    },
+    "files": [
+      "./app/**/*",
+      "./app/dist/main.js"
+    ],
+    "directories": {
+      "output": "release"
     }
   }
 }
