@@ -8,6 +8,7 @@ import './index.less';
 
 export default class Dashboard extends Component<{}, DashboardState> {
     lastClickForDelWord: number;
+    lastClickKeyForDelWord: number;
     inputRef: any = React.createRef();
     constructor(props: any) {
         super(props);
@@ -17,6 +18,7 @@ export default class Dashboard extends Component<{}, DashboardState> {
         };
 
         this.lastClickForDelWord = -1;
+        this.lastClickKeyForDelWord = -1;
 
         this.timerChange = this.timerChange.bind(this);
         this.changeWord = this.changeWord.bind(this);
@@ -32,18 +34,7 @@ export default class Dashboard extends Component<{}, DashboardState> {
         this.setState({ ...wordKitFromMain });
     }
 
-    // timerChange = debounce((e: React.ChangeEvent<HTMLInputElement>): void => {
-    //   // console.log('timer change', e, e.target.value, typeof e.target.value, parseInt(e.target.value));
-    //   console.log('timer change', e);
-    //   const newTimer = e.target.value;
-    //   this.setState({
-    //     timer: isNaN(+newTimer) ? this.state.timer : parseInt(newTimer),
-    //   }, this.notifyMainProcess);
-    // }, 50);
-
     timerChange(e: React.ChangeEvent<HTMLInputElement>): void {
-        // console.log('timer change', e, e.target.value, typeof e.target.value, parseInt(e.target.value));
-        console.log('timer change', e);
         const newTimer = e.target.value;
         this.setState(
             {
@@ -96,15 +87,16 @@ export default class Dashboard extends Component<{}, DashboardState> {
     }
 
     delWord(i: number, date: Date): void {
-        console.log(date, this.lastClickForDelWord, +date - this.lastClickForDelWord);
         const lt: number = this.lastClickForDelWord;
         const dt: number = +date;
 
-        if (lt === -1) {
+        if (lt === -1 || this.lastClickKeyForDelWord === -1) {
             this.lastClickForDelWord = +date;
+            this.lastClickKeyForDelWord = i;
             return;
-        } else if (dt - lt >= 1000) {
+        } else if (dt - lt >= 1000 || this.lastClickKeyForDelWord !== i) {
             this.lastClickForDelWord = -1;
+            this.lastClickKeyForDelWord = -1;
             return;
         }
         this.setState(
