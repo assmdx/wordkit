@@ -54,6 +54,10 @@ function createDashboardWindow() {
     });
     isDebug && dashboardWindow.webContents && dashboardWindow.webContents.openDevTools();
     dashboardWindow.setIgnoreMouseEvents(false);
+    dashboardWindow.on('close', e => {
+        // Do your control here
+        e.preventDefault();
+    });
     if (isDebug) {
         dashboardWindow.loadURL(devURL);
     } else {
@@ -101,6 +105,12 @@ function startNotify() {
     clearInterval(notifyTimer);
     notifyTimer = setInterval(sendNotifyMsg, wordkit.timer * 1000);
 }
+
+app.on('window-all-closed', function(event: any) {
+    // stop app quit
+    event.preventDefault();
+    event.stopPropagation();
+});
 
 app.on('ready', function() {
     if (isWindows) {
