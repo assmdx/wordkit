@@ -3,7 +3,6 @@
 import { app, Menu, BrowserWindow, screen, Tray, ipcMain, Notification } from 'electron';
 import path from 'path';
 const { resolve } = path;
-import electronIsDev from 'electron-is-dev';
 import { format as formatUrl } from 'url';
 
 import { eventList } from '../config';
@@ -26,6 +25,12 @@ let notifyTimer: NodeJS.Timeout;
 
 // 创建仪表盘函数
 function createDashboardWindow() {
+    const windows = BrowserWindow.getAllWindows();
+    if(windows.length === 1) {
+        windows[0].show();
+        windows[0].setSkipTaskbar(false);
+        return;
+    }
     if (dashboardWindow && !dashboardWindow.isDestroyed()) {
         dashboardWindow.close();
     }
@@ -56,6 +61,8 @@ function createDashboardWindow() {
     dashboardWindow.setIgnoreMouseEvents(false);
     dashboardWindow.on('close', e => {
         // Do your control here
+        dashboardWindow.hide();
+        dashboardWindow.setSkipTaskbar(true);
         e.preventDefault();
     });
     if (isDebug) {
@@ -105,12 +112,6 @@ function startNotify() {
     clearInterval(notifyTimer);
     notifyTimer = setInterval(sendNotifyMsg, wordkit.timer * 1000);
 }
-
-app.on('window-all-closed', function(event: any) {
-    // stop app quit
-    event.preventDefault();
-    event.stopPropagation();
-});
 
 app.on('ready', function() {
     if (isWindows) {
