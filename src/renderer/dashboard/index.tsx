@@ -89,13 +89,9 @@ export default class Dashboard extends Component<{}, DashboardState> {
         const lt: number = this.lastClickForDelWord;
         const dt: number = +date;
 
-        if (lt === -1 || this.lastClickKeyForDelWord === -1) {
-            this.lastClickForDelWord = +date;
+        if (lt === -1 || this.lastClickKeyForDelWord === -1 || dt - lt >= 500 || this.lastClickKeyForDelWord !== i) {
+            this.lastClickForDelWord = dt;
             this.lastClickKeyForDelWord = i;
-            return;
-        } else if (dt - lt >= 1000 || this.lastClickKeyForDelWord !== i) {
-            this.lastClickForDelWord = -1;
-            this.lastClickKeyForDelWord = -1;
             return;
         }
         this.setState(
