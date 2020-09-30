@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
 
-import { debounce } from 'lodash';
 import { DashboardState } from '../../types/dashboard';
 import { eventList } from '../../config';
 import './index.less';
@@ -65,7 +64,7 @@ export default class Dashboard extends Component<{}, DashboardState> {
         if (e.keyCode === 13 && this.state.words.every(word => word !== newWord)) {
             this.setState(
                 {
-                    words: this.state.words.concat([newWord]),
+                    words: [newWord].concat(this.state.words.filter(v => v !== newWord)),
                 },
                 () => {
                     this.inputRef.current.value = '';

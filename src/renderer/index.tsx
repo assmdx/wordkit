@@ -2,7 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import { remote } from 'electron';
 import 'reset-css';
 
 import Dashboard from './dashboard';
