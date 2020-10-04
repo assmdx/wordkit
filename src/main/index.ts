@@ -4,6 +4,7 @@ import { app, Menu, BrowserWindow, screen, Tray, ipcMain, Notification } from 'e
 import path from 'path';
 const { resolve } = path;
 import { format as formatUrl } from 'url';
+import log from 'electron-log';
 
 import { eventList } from '../config';
 import { ployfill } from './ployfill.mac';
@@ -26,7 +27,7 @@ let notifyTimer: NodeJS.Timeout;
 // 创建仪表盘函数
 function createDashboardWindow() {
     const windows = BrowserWindow.getAllWindows();
-    if(windows.length === 1) {
+    if (windows.length === 1) {
         windows[0].show();
         windows[0].setSkipTaskbar(false);
         return;
@@ -76,8 +77,6 @@ function createDashboardWindow() {
             }),
         );
     }
-    // dashboardWindow.loadFile(resolve(__dirname, "../renderer/dashboard/dashboard.html"));
-    // dashboardWindow.addListener("closeThisWindow", dashboardWindow.close);
     mainWindow = dashboardWindow;
     if (isMac) {
         ployfill();
@@ -136,8 +135,9 @@ app.on('ready', function() {
         {
             label: '退出',
             click: function() {
+                log.info('will flush data before close app');
                 flush(wordkit);
-                setTimeout(app.exit, 50);
+                app.exit();
             },
         },
     ]);

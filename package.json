@@ -38,7 +38,9 @@
   "dependencies": {
     "@types/electron-is-dev": "^1.1.1",
     "classnames": "^2.2.6",
-    "electron-store": "^5.1.0",
+    "electron-better-ipc": "^1.1.1",
+    "electron-log": "^4.2.4",
+    "electron-store": "^6.0.0",
     "electron-window-state": "^5.0.3",
     "exit-hook": "^2.2.0",
     "file-loader": "^6.0.0",
