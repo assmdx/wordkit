@@ -6,43 +6,6 @@
 
 [下载地址](https://github.com/assmdx/wordkit/releases)
 
-# 目录结构
-
-```
-├── src
-│   ├── assets
-│   │   ├── css
-│   │   │   ├── **/*.css
-│   │   ├── js
-│   │   │   ├── **/*.js
-│   │   ├── img
-│   │   │   └── **/*.png
-│   ├── config
-│   │   └── index.js
-│   ├── datastore
-│   │   └── word.json
-│   ├── main
-│   │   └── main.js
-│   ├── renderer
-│   │   ├── dashboard
-│   │   │   ├── dashboard.html
-│   │   │   └── dashboard.js
-│   │   ├── index
-│   │   │   ├── index.html
-│   │   │   └── index.js
-│   ├── utils
-│   │   └── index.js
-├── dist
-├── resources
-├── policy
-│   └── index.html
-├── .gitconfig
-├── .gitignore
-├── README.md
-├── package.json
-└── LICENSE
-```
-
 # 运行
 
 ## 克隆代码,安装依赖
