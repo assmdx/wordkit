@@ -96,9 +96,8 @@ function sendNotifyMsg() {
         }
         const msg = wordkit.words[index];
         const notification = new Notification({
-            title: '铭', // 通知的标题, 将在通知窗口的顶部显示
+            title: '', // 通知的标题, 将在通知窗口的顶部显示
             body: msg, // 通知的正文文本, 将显示在标题或副标题下面
-            icon: LOGO, // 用于在该通知上显示的图标
             silent: true, // 在显示通知时是否发出系统提示音
         });
         notification.show();
