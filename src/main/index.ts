@@ -154,6 +154,7 @@ app.setLoginItemSettings({
 // 负责接收渲染进程传给主进程的数据
 ipcMain.on(eventList.UPDATE_WORDKIT, (event, newWordkit) => {
     wordkit = { ...newWordkit };
+    flush(wordkit);
     startNotify();
 });
 
