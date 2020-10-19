@@ -1,6 +1,6 @@
 {
   "name": "wordkit",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "铭",
   "main.backup": "src/main/main.js",
   "main": "./app/dist/main.js",
